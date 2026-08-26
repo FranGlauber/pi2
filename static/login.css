@@ -1,0 +1,339 @@
+/* ============ RESET & BASE ============ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --green-dark: #d0f8ebfa;
+  --green-darker: #7ad8b9;
+  --green-main: #2f7d5f;
+  --green-light: #e6f2ea;
+  --bg-page: #eef5f0;
+  --text-dark: #1c2b24;
+  --text-muted: #6b7d74;
+  --border-color: #dbe8e0;
+  --white: #ffffff;
+  --font-display: "Outfit", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-page);
+  color: var(--text-dark);
+}
+
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+input { font-family: inherit; }
+
+/* ============ LAYOUT GERAL ============ */
+.login-screen {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ============ PAINEL ESQUERDO — MARCA ============ */
+.brand-panel {
+  position: relative;
+  flex: 1.1;
+  background: linear-gradient(160deg, var(--green-darker) 0%, var(--green-dark) 55%, #1d684d 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  overflow: hidden;
+}
+
+.brand-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.brand-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+}
+
+.brand-logo {
+  max-width: 420px;
+  width: 150%;
+  height: auto;
+  object-fit: contain;
+}
+
+.brand-tagline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  color: rgba(6, 70, 56, 0.88);
+  max-width: 360px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.brand-footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 40px;
+  font-size: 12.5px;
+  color: rgba(28, 109, 89, 0.55);
+}
+
+/* ============ PAINEL DIREITO — FORM ============ */
+.form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+  background: var(--white);
+}
+
+.form-wrap {
+  width: 100%;
+  max-width: 420px;
+}
+
+.form-header {
+  margin-bottom: 30px;
+}
+
+.form-header h1 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.form-header p {
+  font-size: 14.5px;
+  color: var(--text-muted);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ============ SELETOR DE PERFIL ============ */
+.role-select {
+  border: none;
+}
+
+.role-select legend {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.role-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  background: var(--white);
+}
+
+.role-card-wide {
+  grid-column: 1 / -1;
+}
+
+.role-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.role-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+
+.role-label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.role-card:hover {
+  border-color: #b9d6c6;
+}
+
+.role-card:has(input:checked) {
+  border-color: var(--green-dark);
+  background: var(--green-light);
+}
+
+.role-card:has(input:checked) .role-icon {
+  background: var(--green-dark);
+  color: var(--white);
+}
+
+.role-card:has(input:focus-visible) {
+  outline: 2px solid var(--green-dark);
+  outline-offset: 2px;
+}
+
+/* ============ CAMPOS ============ */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.field-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--text-muted);
+  transition: border-color 0.15s ease;
+}
+
+.field-input:focus-within {
+  border-color: var(--green-dark);
+}
+
+.field-input input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 14.5px;
+  color: var(--text-dark);
+  background: transparent;
+}
+
+.toggle-pass {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+}
+
+.toggle-pass:hover {
+  color: var(--green-dark);
+}
+
+/* ============ LEMBRAR / ESQUECI ============ */
+.field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13.5px;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.remember input {
+  accent-color: var(--green-dark);
+  width: 15px;
+  height: 15px;
+}
+
+.forgot-link {
+  color: var(--green-dark);
+  font-weight: 600;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* ============ BOTÃO ============ */
+.btn-submit {
+  margin-top: 6px;
+  background: var(--green-dark);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-display);
+  transition: background 0.15s ease;
+}
+
+.btn-submit:hover {
+  background: var(--green-main);
+}
+
+.btn-submit:active {
+  background: var(--green-darker);
+}
+
+/* ============ RESPONSIVO ============ */
+@media (max-width: 980px) {
+  .login-screen {
+    flex-direction: column;
+  }
+  .brand-panel {
+    padding: 40px 24px;
+    min-height: 280px;
+  }
+  .brand-logo {
+    max-width: 260px;
+  }
+  .brand-tagline {
+    font-size: 16px;
+  }
+  .form-panel {
+    padding: 36px 24px 56px;
+  }
+}
+
+@media (max-width: 480px) {
+  .role-grid {
+    grid-template-columns: 1fr;
+  }
+  .role-card-wide {
+    grid-column: auto;
+  }
+}
