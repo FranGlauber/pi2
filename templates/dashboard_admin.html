@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ExamLife | Administração</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <button class="menu-toggle" aria-label="Abrir/fechar menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="logo-block">
+        <!-- Substitua "logo.png" pelo arquivo do logotipo do laboratório -->
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="ExamLife Análises Clínicas" class="logo-img">
+      </div>
+    </div>
+
+    <p class="sidebar-welcome">Seja bem vida à administração!</p>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 11.5 12 4l9 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Dashboard
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        Usuários
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 20a5.7 5.7 0 0 1 11 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 4.2a3.2 3.2 0 0 1 0 6M20.5 20a5 5 0 0 0-4-5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        Funcionários
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        Pacientes
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2h6M7.5 14h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        Exames
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 15l4-5 3 3 5-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Relatórios
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 13.5a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.9 2.9l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.9-2.9l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1h-.2a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.9-2.9l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6v-.2a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.9 2.9l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1h.2a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.6 1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </span>
+        Configurações
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        Meu perfil
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Sair
+      </a>
+    </div>
+  </aside>
+
+  <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+  <div class="main">
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="topbar-title">
+        <h1>ADMINISTRAÇÃO</h1>
+        <p>Bom dia, <strong>Carlos!</strong></p>
+      </div>
+
+      <div class="topbar-search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" placeholder="Faça sua pesquisa...">
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-btn" aria-label="Notificações">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="badge">3</span>
+        </button>
+        <button class="icon-btn" aria-label="Mensagens">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.4 8.5 8.5 0 0 1-4-1L3 20l1.1-5.5A8.4 8.4 0 1 1 21 11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="avatar-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="white" stroke-width="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- BANNER DE BOAS-VINDAS -->
+    <div class="welcome-banner">
+      <div class="welcome-text">
+        <h2>Bem-vindo(a) à área administrativa</h2>
+        <p>Acompanhe os indicadores e gerencie todas as informações do laboratório.</p>
+      </div>
+      <div class="welcome-decor" aria-hidden="true">
+        <svg width="90" height="140" viewBox="0 0 90 140" fill="none"><path d="M45 130 C 20 100, 20 60, 45 10 C 70 60, 70 100, 45 130 Z" fill="#dcebe0"/><path d="M45 130 V 20" stroke="#c3ddc9" stroke-width="2"/></svg>
+      </div>
+      <div class="welcome-image">
+        <!-- Substitua "banner.png" pela imagem do banner desejada -->
+        <img src="{{ url_for('static', filename='banner_admin.png') }}" alt="Laboratório ExamLife">
+      </div>
+    </div>
+
+    <!-- CARDS DE ESTATÍSTICAS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-text">
+          <span class="stat-number">1.358</span>
+          <span class="stat-label">Pacientes cadastrados</span>
+          <span class="stat-trend up">↑ 8,2% este mês</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2h6M7.5 14h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-text">
+          <span class="stat-number">56</span>
+          <span class="stat-label">Exames em andamento</span>
+          <span class="stat-trend up">↑ 5,4% este mês</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M2.5 20a6.7 6.7 0 0 1 13 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M18 9v6M15 12h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-text">
+          <span class="stat-number">24</span>
+          <span class="stat-label">Usuários ativos</span>
+          <span class="stat-trend up">↑ 2 novos esta semana</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M11 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="stat-text">
+          <span class="stat-number">32</span>
+          <span class="stat-label">Solicitações hoje</span>
+          <span class="stat-trend up">↑ 12% este mês</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LINHA: GRÁFICO + ALERTAS -->
+    <div class="content-row">
+
+      <div class="content-left">
+
+        <!-- GRÁFICO -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h2>Exames solicitados - Últimos 7 dias</h2>
+            <button class="dropdown-btn">
+              Últimos 7 dias
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+
+          <div class="chart-area">
+            <svg viewBox="0 0 720 220" class="line-chart" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2f7d5f" stop-opacity="0.22"/>
+                  <stop offset="100%" stop-color="#2f7d5f" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+
+              <!-- linhas de grade -->
+              <g stroke="#e4ede7" stroke-width="1">
+                <line x1="0" y1="10" x2="720" y2="10"/>
+                <line x1="0" y1="52" x2="720" y2="52"/>
+                <line x1="0" y1="94" x2="720" y2="94"/>
+                <line x1="0" y1="136" x2="720" y2="136"/>
+                <line x1="0" y1="178" x2="720" y2="178"/>
+              </g>
+
+              <!-- área sob a linha -->
+              <path d="M20,178 L124,144.4 L228,166.8 L332,121.6 L436,66 L540,79.2 L644,53.2 L644,200 L20,200 Z" fill="url(#areaFill)"/>
+
+              <!-- linha -->
+              <polyline points="20,178 124,144.4 228,166.8 332,121.6 436,66 540,79.2 644,53.2" fill="none" stroke="#1f6b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+              <!-- pontos -->
+              <circle cx="20" cy="178" r="4.5" fill="#1f6b52"/>
+              <circle cx="124" cy="144.4" r="4.5" fill="#1f6b52"/>
+              <circle cx="228" cy="166.8" r="4.5" fill="#1f6b52"/>
+              <circle cx="332" cy="121.6" r="4.5" fill="#1f6b52"/>
+              <circle cx="436" cy="66" r="4.5" fill="#1f6b52"/>
+              <circle cx="540" cy="79.2" r="4.5" fill="#1f6b52"/>
+              <circle cx="644" cy="53.2" r="4.5" fill="#1f6b52"/>
+            </svg>
+
+            <div class="chart-y-labels">
+              <span>100</span><span>80</span><span>60</span><span>40</span><span>20</span><span>0</span>
+            </div>
+
+            <div class="chart-points-labels">
+              <span>32</span><span>45</span><span>38</span><span>56</span><span>75</span><span>68</span><span>82</span>
+            </div>
+          </div>
+
+          <div class="chart-x-labels">
+            <span>15/mai</span><span>16/mai</span><span>17/mai</span><span>18/mai</span><span>19/mai</span><span>20/mai</span><span>21/mai</span>
+          </div>
+
+          <div class="chart-summary">
+            <div class="chart-summary-item">
+              <span class="summary-number">396</span>
+              <span class="summary-label">Total de exames</span>
+            </div>
+            <div class="chart-summary-item">
+              <span class="summary-number">82</span>
+              <span class="summary-label">Maior pico diário (21/mai)</span>
+            </div>
+            <div class="chart-summary-item">
+              <span class="summary-number positive">+18,7%</span>
+              <span class="summary-label">Crescimento semanal</span>
+            </div>
+            <div class="chart-summary-item">
+              <span class="summary-number">12,4%</span>
+              <span class="summary-label">Média mensal</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ATIVIDADES RECENTES -->
+        <div class="activities-card">
+          <h2>Atividades recentes</h2>
+
+          <div class="table-wrap">
+            <table class="activities-table">
+              <thead>
+                <tr>
+                  <th>Usuário</th>
+                  <th>Ação realizada</th>
+                  <th>Módulo</th>
+                  <th>Data/Hora</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="cell-name"><span class="avatar-initials avatar-1">AS</span>Ana Souza</td>
+                  <td>Cadastrou novo paciente</td>
+                  <td>Pacientes</td>
+                  <td>21/05/2025 10:32</td>
+                </tr>
+                <tr>
+                  <td class="cell-name"><span class="avatar-initials avatar-2">JL</span>João Lima</td>
+                  <td>Solicitou exame</td>
+                  <td>Exames</td>
+                  <td>21/05/2025 10:18</td>
+                </tr>
+                <tr>
+                  <td class="cell-name"><span class="avatar-initials avatar-3">MS</span>Maria Silva</td>
+                  <td>Atualizou resultado de exame</td>
+                  <td>Exames</td>
+                  <td>21/05/2025 09:54</td>
+                </tr>
+                <tr>
+                  <td class="cell-name"><span class="avatar-initials avatar-1">CF</span>Carlos Ferreira</td>
+                  <td>Criou novo usuário</td>
+                  <td>Usuários</td>
+                  <td>21/05/2025 09:21</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <a href="#" class="view-all-link">Ver todas as atividades</a>
+        </div>
+
+      </div>
+
+      <!-- COLUNA DIREITA -->
+      <aside class="side-col">
+
+        <!-- ALERTAS -->
+        <div class="alerts-card">
+          <h2>Alertas</h2>
+
+          <div class="alert-list">
+            <a href="#" class="alert-item">
+              <span class="alert-icon alert-warning">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3 2 20h20L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4M12 17h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span class="alert-text">
+                <strong>3 exames atrasados</strong>
+                <span>Verificar pendências</span>
+              </span>
+              <svg class="alert-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+
+            <a href="#" class="alert-item">
+              <span class="alert-icon alert-info">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M20 8v6M23 11h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span class="alert-text">
+                <strong>2 novos usuários</strong>
+                <span>Aguardando aprovação</span>
+              </span>
+              <svg class="alert-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+
+            <a href="#" class="alert-item">
+              <span class="alert-icon alert-warning">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2h6M7.5 14h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span class="alert-text">
+                <strong>5 exames aguardando coleta</strong>
+                <span>Acima do esperado</span>
+              </span>
+              <svg class="alert-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+
+            <a href="#" class="alert-item">
+              <span class="alert-icon alert-success">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3 4 6v6c0 5 3.4 8.7 8 9 4.6-.3 8-4 8-9V6l-8-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="alert-text">
+                <strong>Sistema atualizado</strong>
+                <span>Última atualização: hoje, 08:30</span>
+              </span>
+              <svg class="alert-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- RESUMO DO MÊS -->
+        <div class="summary-card">
+          <div class="summary-header">
+            <h2>Resumo do mês</h2>
+            <button class="dropdown-btn">
+              Maio/2025
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+
+          <div class="summary-list">
+            <div class="summary-row">
+              <span class="summary-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2h6M7.5 14h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span class="summary-row-label">Total de exames</span>
+              <span class="summary-row-value">1.652</span>
+              <span class="summary-badge positive">+14,6%</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="summary-row-label">Exames concluídos</span>
+              <span class="summary-row-value">1.298</span>
+              <span class="summary-badge positive">+11,3%</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 2v4M16 2v4M4 10h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </span>
+              <span class="summary-row-label">Exames pendentes</span>
+              <span class="summary-row-value">246</span>
+              <span class="summary-badge negative">-3,2%</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
+              </span>
+              <span class="summary-row-label">Pacientes atendidos</span>
+              <span class="summary-row-value">842</span>
+              <span class="summary-badge positive">+9,1%</span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
