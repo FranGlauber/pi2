@@ -32,7 +32,7 @@
 
     <div class="brand-content">
       <!-- Substitua "logo-white.png" pela versão do logotipo em branco/monocromática -->
-      <img src="{{ url_for('static', filename='logo.png') }}" alt="ExamLife Análises Clínicas" class="brand-logo">
+      <img src="/static/logo.png" alt="ExamLife Análises Clínicas" class="brand-logo">
       <p class="brand-tagline">Cuidando de cada resultado com precisão e confiança.</p>
     </div>
 
@@ -133,6 +133,32 @@
   </section>
 
 </div>
+
+<script>
+  // Rotas de destino para cada perfil (ajuste conforme as telas forem sendo criadas)
+  const rotas = {
+    administrador: "{{ url_for('administracao') }}",
+    recepcionista: "{{ url_for('recepcao') }}",
+    analista: "#",
+    tecnico: "#",
+    paciente: "#"
+  };
+
+  const form = document.querySelector('.login-form');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const perfilSelecionado = document.querySelector('input[name="perfil"]:checked').value;
+    const destino = rotas[perfilSelecionado];
+
+    if (destino && destino !== "#") {
+      window.location.href = destino;
+    } else {
+      alert('A tela para esse perfil ainda não foi criada.');
+    }
+  });
+</script>
 
 </body>
 </html>

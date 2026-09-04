@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Pacientes · ExamLife</title>
+  <link rel="stylesheet" href="/static/pacientes.css">
+  {# ATENÇÃO: se a sidebar/header de vocês já está definida em recepcao.css,
+     troca o link acima (ou soma) para: url_for('static', filename='css/recepcao.css')
+     Sem ver o dashboard_recepcao.html eu não tenho como copiar a marcação exata
+     da sidebar, então deixei uma sidebar própria aqui embaixo (mesmos itens do
+     print) pra não travar vocês. Me manda o dashboard_recepcao.html que eu troco
+     por essa mesma estrutura/classes, pra ficar 100% igual sem duplicar CSS.
+     A tela ficou só com o CADASTRO de paciente — a consulta/listagem
+     continua sendo feita na tabela que já existe na dashboard. #}
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar__scroll">
+    <div class="sidebar__top">
+      <button class="sidebar__toggle" aria-label="Recolher menu">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div class="sidebar__logo">
+        <img src="/static/logo.png" alt="ExamLife - Análises clínicas">
+        {# Substitui o src acima pelo caminho real do arquivo de logo de vocês. #}
+      </div>
+    </div>
+    <p class="sidebar__greeting">Seja bem vinda à recepção!</p>
+    <nav class="sidebar__nav">
+      <a href="{{ url_for('recepcao') }}" class="nav-item is-active">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        Dashboard
+      </a>
+      <a href="{{ url_for('solicitar_exames') }}" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M8 19a4 4 0 004-4v-3M4 4v6a4 4 0 004 4h0M8 4v4M4 4h4M18 8a3 3 0 100-6 3 3 0 000 6z"/></svg>
+        Solicitar exames
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 013 3L12 15l-4 1 1-4z"/></svg>
+        Remarcar exames
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M9.5 14.5l5 5M14.5 14.5l-5 5"/></svg>
+        Desmarcar exames
+      </a>
+      <a href="{{ url_for('situacao_exames')}}" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+        Situação dos exames
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
+        Convênio público
+      </a>
+      <a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
+        Convênio particular
+      </a>
+    </nav>
+    <div class="sidebar__footer">
+      <a href="{{ url_for('perfil')}}" class="nav-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>
+        Meu perfil
+      </a>
+      <a href="{{ url_for('login') }}" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Sair
+      </a>
+    </div>
+  </div>
+</aside>
+
+  <!-- ===================== CADASTRO DE PACIENTE ===================== -->
+  <section class="card" id="cadastro-paciente">
+    <div class="card__header">
+      <h2>Novo paciente</h2>
+      <p>Preencha os dados abaixo para cadastrar um paciente</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('pacientes') }}" class="form-grid" novalidate>
+
+      <div class="form-field span-2">
+        <label for="nome">Nome completo</label>
+        <input type="text" id="nome" name="nome" placeholder="Ex: Maria Aparecida Silva" required>
+      </div>
+
+      <div class="form-field">
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required>
+      </div>
+
+      <div class="form-field">
+        <label for="nascimento">Data de nascimento</label>
+        <input type="date" id="nascimento" name="nascimento" required>
+      </div>
+
+      <div class="form-field">
+        <label for="sexo">Sexo</label>
+        <select id="sexo" name="sexo" required>
+          <option value="" disabled selected>Selecione</option>
+          <option value="feminino">Feminino</option>
+          <option value="masculino">Masculino</option>
+          <option value="outro">Outro</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="telefone">Telefone</label>
+        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" required>
+      </div>
+
+      <div class="form-field span-2">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="nome@email.com">
+      </div>
+
+      <div class="form-field">
+        <label for="cep">CEP</label>
+        <input type="text" id="cep" name="cep" placeholder="00000-000">
+      </div>
+
+      <div class="form-field span-2">
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" name="endereco" placeholder="Rua, número, bairro">
+      </div>
+
+      <div class="form-field">
+        <label for="cidade">Cidade / UF</label>
+        <input type="text" id="cidade" name="cidade" placeholder="Cidade - UF">
+      </div>
+
+      <div class="form-field span-4">
+        <label for="observacoes">Observações</label>
+        <textarea id="observacoes" name="observacoes" rows="2" placeholder="Informações adicionais (opcional)"></textarea>
+      </div>
+
+      <div class="form-actions span-4">
+        <button type="reset" class="btn btn--ghost">Cancelar</button>
+        <button type="submit" class="btn btn--primary">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Salvar paciente
+        </button>
+      </div>
+    </form>
+  </section>
+
+</main>
+</div><!-- /.main -->
+</div><!-- /.layout -->
+</body>
+</html>

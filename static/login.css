@@ -65,7 +65,7 @@ input { font-family: inherit; }
 }
 
 .brand-logo {
-  max-width: 420px;
+  max-width: 500px;
   width: 150%;
   height: auto;
   object-fit: contain;
@@ -74,19 +74,22 @@ input { font-family: inherit; }
 .brand-tagline {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 19px;
+  font-size: 20px;
   color: rgba(6, 70, 56, 0.88);
   max-width: 360px;
   line-height: 1.5;
   font-style: italic;
+  margin-top: -60px;
+  margin-left: -20px;
 }
 
 .brand-footer {
   position: relative;
   z-index: 1;
-  margin-top: 40px;
+  margin-top: 30px;
   font-size: 12.5px;
   color: rgba(28, 109, 89, 0.55);
+  margin-left: -25px;
 }
 
 /* ============ PAINEL DIREITO — FORM ============ */
@@ -110,7 +113,7 @@ input { font-family: inherit; }
 
 .form-header h1 {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 33px;
   font-weight: 700;
   color: var(--text-dark);
   margin-bottom: 8px;
@@ -119,6 +122,7 @@ input { font-family: inherit; }
 .form-header p {
   font-size: 14.5px;
   color: var(--text-muted);
+  margin-top: -6px;
 }
 
 .login-form {
@@ -178,7 +182,7 @@ input { font-family: inherit; }
   height: 34px;
   flex-shrink: 0;
   border-radius: 9px;
-  background: var(--green-light);
+  background: rgba(1, 156, 130, 0.89);
   color: var(--green-dark);
 }
 
@@ -279,7 +283,7 @@ input { font-family: inherit; }
 }
 
 .forgot-link {
-  color: var(--green-dark);
+  color: rgb(0, 128, 90);
   font-weight: 600;
 }
 
@@ -290,7 +294,7 @@ input { font-family: inherit; }
 /* ============ BOTÃO ============ */
 .btn-submit {
   margin-top: 6px;
-  background: var(--green-dark);
+  background: rgba(1, 184, 138, 0.856);
   color: var(--white);
   border: none;
   border-radius: 12px;
