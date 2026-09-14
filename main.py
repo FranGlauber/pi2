@@ -1,7 +1,4 @@
-from flask import Flask, render_template, request
-
-app = Flask(__name__)
-
+from controllers.paciente_controller import *
 
 @app.route("/")
 def login():
