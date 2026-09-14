@@ -10,7 +10,7 @@ def login():
 
 @app.route("/recepcao")
 def recepcao():
-    return render_template("dashboard_recepcao.html")
+    return render_template("recepcao.html")
 
 
 @app.route("/pacientes")
