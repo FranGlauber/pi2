@@ -48,7 +48,7 @@
         <p>Selecione seu perfil e entre com suas credenciais.</p>
       </header>
 
-      <form class="login-form" action="#" method="post">
+      <form class="login-form" action="{{ url_for("login") }}" method="post">
 
         <fieldset class="role-select">
           <legend>Quem está entrando?</legend>
@@ -135,29 +135,14 @@
 </div>
 
 <script>
-  // Rotas de destino para cada perfil (ajuste conforme as telas forem sendo criadas)
-  const rotas = {
-    administrador: "{{ url_for('administracao') }}",
-    recepcionista: "{{ url_for('recepcao') }}",
-    analista: "#",
-    tecnico: "#",
-    paciente: "#"
-  };
+  const togglePass = document.querySelector('.toggle-pass');
+  const senha = document.querySelector('#senha');
 
-  const form = document.querySelector('.login-form');
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const perfilSelecionado = document.querySelector('input[name="perfil"]:checked').value;
-    const destino = rotas[perfilSelecionado];
-
-    if (destino && destino !== "#") {
-      window.location.href = destino;
-    } else {
-      alert('A tela para esse perfil ainda não foi criada.');
-    }
-  });
+  if (togglePass && senha) {
+    togglePass.addEventListener('click', function () {
+      senha.type = senha.type === 'password' ? 'text' : 'password';
+    });
+  }
 </script>
 
 </body>

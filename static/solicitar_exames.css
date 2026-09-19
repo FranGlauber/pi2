@@ -755,3 +755,34 @@ textarea::placeholder { color: var(--text-muted); }
   .page-actions { justify-content: stretch; }
   .btn-outline, .btn-primary { flex: 1; justify-content: center; }
 }
+
+.mensagens {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.mensagem {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.mensagem.sucesso {
+  background: #e8f7ee;
+  color: #176b3a;
+}
+
+.mensagem.erro {
+  background: #fdecec;
+  color: #a32626;
+}
+
+#pacienteSelect {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  padding: 2px 28px 2px 0;
+}
