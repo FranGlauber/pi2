@@ -347,13 +347,81 @@ def solicitar_exames():
     )
 
 
+
+@app.route("/situacao_exames_detalhe/<int:id>")
+@recepcionista_required
+def situacao_exames_detalhe(id):
+    conexao = conectar()
+
+    solicitacao = conexao.execute(
+        """
+        SELECT
+            s.id,
+            s.data_solicitacao,
+            s.status,
+            s.observacoes,
+            p.nome AS paciente_nome,
+            p.cpf AS paciente_cpf,
+            p.data_nascimento,
+            p.sexo,
+            p.telefone,
+            p.email,
+            p.endereco,
+            p.numero,
+            p.bairro,
+            p.cidade,
+            p.estado,
+            c.data_coleta,
+            c.horario,
+            c.material,
+            c.observacoes AS observacoes_coleta
+        FROM solicitacoes s
+        INNER JOIN pacientes p
+            ON p.id = s.paciente_id
+        LEFT JOIN coletas c
+            ON c.solicitacao_id = s.id
+        WHERE s.id = ?
+        """,
+        (id,)
+    ).fetchone()
+
+    if solicitacao is None:
+        conexao.close()
+        flash("Solicitação não encontrada.", "erro")
+        return redirect(url_for("situacao_exames"))
+
+    exames = conexao.execute(
+        """
+        SELECT
+            se.id,
+            e.nome,
+            e.descricao
+        FROM solicitacao_exames se
+        INNER JOIN tipos_exames e
+            ON e.id = se.exame_id
+        WHERE se.solicitacao_id = ?
+        ORDER BY e.nome
+        """,
+        (id,)
+    ).fetchall()
+
+    conexao.close()
+
+    return render_template(
+        "situacao_exames_detalhe.html",
+        solicitacao=solicitacao,
+        exames=exames
+    )
+
 @app.route("/situacao_exames")
 @recepcionista_required
 def situacao_exames():
     conexao = conectar()
 
     busca = request.args.get("busca", "").strip()
-    status = request.args.get("status", "").strip()
+    periodo = request.args.get("periodo", "").strip()
+    status_filtro = request.args.get("status", "").strip()
+    tipo_exame = request.args.get("tipo_exame", "").strip()
 
     query = """
         SELECT
@@ -361,9 +429,11 @@ def situacao_exames():
             s.data_solicitacao,
             s.status,
             s.observacoes,
-            p.nome AS paciente,
-            p.cpf,
-            GROUP_CONCAT(e.nome, ', ') AS exames
+            p.nome AS paciente_nome,
+            p.cpf AS paciente_cpf,
+            GROUP_CONCAT(e.nome, '||') AS exames,
+            c.data_coleta,
+            c.horario
         FROM solicitacoes s
         INNER JOIN pacientes p
             ON p.id = s.paciente_id
@@ -371,11 +441,14 @@ def situacao_exames():
             ON se.solicitacao_id = s.id
         INNER JOIN tipos_exames e
             ON e.id = se.exame_id
+        LEFT JOIN coletas c
+            ON c.solicitacao_id = s.id
         WHERE 1 = 1
     """
 
     parametros = []
 
+    # PESQUISA POR NOME, CPF OU CÓDIGO DA SOLICITAÇÃO
     if busca:
         query += """
             AND (
@@ -385,33 +458,225 @@ def situacao_exames():
             )
         """
 
+        valor = f"%{busca}%"
+
         parametros.extend([
-            f"%{busca}%",
-            f"%{busca}%",
-            f"%{busca}%"
+            valor,
+            valor,
+            valor
         ])
 
-    if status:
+    # FILTRO DE STATUS
+    if status_filtro == "aguardando":
         query += " AND s.status = ?"
-        parametros.append(status)
+        parametros.append("Aguardando coleta")
+
+    elif status_filtro == "andamento":
+        query += " AND s.status IN (?, ?)"
+        parametros.extend([
+            "Em andamento",
+            "Em análise"
+        ])
+
+    elif status_filtro == "concluido":
+        query += " AND s.status IN (?, ?)"
+        parametros.extend([
+            "Concluído",
+            "Concluída"
+        ])
+
+    # FILTRO POR TIPO DE EXAME
+    if tipo_exame:
+        query += """
+            AND EXISTS (
+                SELECT 1
+                FROM solicitacao_exames se2
+                WHERE se2.solicitacao_id = s.id
+                AND se2.exame_id = ?
+            )
+        """
+
+        parametros.append(tipo_exame)
+
+    # FILTRO POR PERÍODO
+    if periodo:
+        try:
+            partes = periodo.split("-")
+
+            if len(partes) == 2:
+                data_inicio = partes[0].strip()
+                data_fim = partes[1].strip()
+
+                inicio_convertido = datetime.strptime(
+                    data_inicio,
+                    "%d/%m/%Y"
+                ).strftime("%Y-%m-%d")
+
+                fim_convertido = datetime.strptime(
+                    data_fim,
+                    "%d/%m/%Y"
+                ).strftime("%Y-%m-%d")
+
+                query += """
+                    AND date(s.data_solicitacao)
+                    BETWEEN date(?) AND date(?)
+                """
+
+                parametros.extend([
+                    inicio_convertido,
+                    fim_convertido
+                ])
+
+        except ValueError:
+            pass
 
     query += """
         GROUP BY s.id
         ORDER BY s.id DESC
     """
 
-    solicitacoes = conexao.execute(
+    registros = conexao.execute(
         query,
         parametros
     ).fetchall()
 
+    # RESUMOS DOS CARDS
+    hoje = datetime.now().strftime("%Y-%m-%d")
+
+    solicitacoes_hoje = conexao.execute(
+        """
+        SELECT COUNT(*)
+        FROM solicitacoes
+        WHERE date(data_solicitacao) = date(?)
+        """,
+        (hoje,)
+    ).fetchone()[0]
+
+    exames_aguardando = conexao.execute(
+        """
+        SELECT COUNT(*)
+        FROM solicitacao_exames se
+        INNER JOIN solicitacoes s
+            ON s.id = se.solicitacao_id
+        WHERE s.status = 'Aguardando coleta'
+        """
+    ).fetchone()[0]
+
+    exames_andamento = conexao.execute(
+        """
+        SELECT COUNT(*)
+        FROM solicitacao_exames se
+        INNER JOIN solicitacoes s
+            ON s.id = se.solicitacao_id
+        WHERE s.status IN ('Em andamento', 'Em análise')
+        """
+    ).fetchone()[0]
+
+    laudos_disponiveis = conexao.execute(
+        """
+        SELECT COUNT(*)
+        FROM resultados
+        WHERE validado = 1
+        """
+    ).fetchone()[0]
+
+    total_pacientes = conexao.execute(
+        "SELECT COUNT(*) FROM pacientes"
+    ).fetchone()[0]
+
+    tipos_exame = conexao.execute(
+        """
+        SELECT id, nome
+        FROM tipos_exames
+        ORDER BY nome
+        """
+    ).fetchall()
+
     conexao.close()
+
+    # PREPARA OS DADOS PARA O FRONTEND ORIGINAL
+    exames = []
+
+    for registro in registros:
+        item = dict(registro)
+
+        item["exames"] = (
+            item["exames"].split("||")
+            if item["exames"]
+            else []
+        )
+
+        data_coleta = item.get("data_coleta")
+        horario = item.get("horario")
+
+        if data_coleta:
+            try:
+                item["coleta_data"] = datetime.strptime(
+                    data_coleta,
+                    "%Y-%m-%d"
+                ).strftime("%d/%m/%Y")
+            except ValueError:
+                item["coleta_data"] = data_coleta
+        else:
+            item["coleta_data"] = "Não realizada"
+
+        item["coleta_hora"] = horario or ""
+
+        try:
+            item["atualizado_data"] = datetime.strptime(
+                data_coleta or item["data_solicitacao"],
+                "%Y-%m-%d"
+            ).strftime("%d/%m/%Y")
+        except ValueError:
+            item["atualizado_data"] = (
+                data_coleta or item["data_solicitacao"]
+            )
+
+        item["atualizado_hora"] = horario or ""
+
+        # Converte o status do banco para as classes
+        # que o frontend original já utiliza.
+        if item["status"] == "Aguardando coleta":
+            item["status_classe"] = "aguardando"
+
+        elif item["status"] in ("Em andamento", "Em análise"):
+            item["status_classe"] = "andamento"
+
+        elif item["status"] in ("Concluído", "Concluída"):
+            item["status_classe"] = "concluido"
+
+        else:
+            item["status_classe"] = "andamento"
+
+        exames.append(item)
+
+    # PAGINAÇÃO VISUAL DO FRONTEND
+    total_resultados = len(exames)
+
+    if total_resultados > 0:
+        pagina_inicio = 1
+        pagina_fim = total_resultados
+    else:
+        pagina_inicio = 0
+        pagina_fim = 0
 
     return render_template(
         "situacao_exames.html",
-        solicitacoes=solicitacoes
+        exames=exames,
+        tipos_exame=tipos_exame,
+        busca=busca,
+        periodo=periodo,
+        status=status_filtro,
+        tipo_exame=tipo_exame,
+        solicitacoes_hoje=solicitacoes_hoje,
+        exames_aguardando=exames_aguardando,
+        exames_andamento=exames_andamento,
+        laudos_disponiveis=laudos_disponiveis,
+        total_pacientes=total_pacientes,
+        pagina_inicio=pagina_inicio,
+        pagina_fim=pagina_fim,
+        total_resultados=total_resultados
     )
-
 
 @app.route("/perfil")
 @login_required

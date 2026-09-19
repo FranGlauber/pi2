@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
@@ -85,7 +85,7 @@
           <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
         </div>
         <div>
-          <strong>24</strong>
+          <strong>{{ solicitacoes_hoje }}</strong>
           <span>Solicitações hoje</span>
         </div>
       </div>
@@ -95,7 +95,7 @@
           <svg viewBox="0 0 24 24"><path d="M9 2v6L4 20a1 1 0 001 1h14a1 1 0 001-1L15 8V2"/><path d="M9 2h6"/></svg>
         </div>
         <div>
-          <strong>32</strong>
+          <strong>{{ exames_aguardando }}</strong>
           <span>Exames aguardando coleta</span>
         </div>
       </div>
@@ -105,7 +105,7 @@
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         </div>
         <div>
-          <strong>56</strong>
+          <strong>{{ exames_andamento }}</strong>
           <span>Exames em análise</span>
         </div>
       </div>
@@ -115,7 +115,7 @@
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
         </div>
         <div>
-          <strong>128</strong>
+          <strong>{{ laudos_disponiveis }}</strong>
           <span>Laudos disponíveis</span>
         </div>
       </div>
@@ -125,7 +125,7 @@
           <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
         </div>
         <div>
-          <strong>1.358</strong>
+          <strong>{{ total_pacientes }}</strong>
           <span>Pacientes cadastrados</span>
         </div>
       </div>
@@ -165,12 +165,12 @@
           <select id="tipo_exame" name="tipo_exame">
             <option value="">Todos</option>
             {% for tipo in tipos_exame %}
-            <option value="{{ tipo.id }}">{{ tipo.nome }}</option>
+            <option value="{{ tipo.id }}" {% if tipo_exame == tipo.id|string %}selected{% endif %}>{{ tipo.nome }}</option>
             {% endfor %}
           </select>
         </div>
 
-        <button type="reset" class="btn btn--outline">
+        <button type="button" class="btn btn--outline" onclick="window.location.href='{{ url_for("situacao_exames") }}'">
           <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a1 1 0 011-1h6a1 1 0 011 1v2M6 6l1 14a1 1 0 001 1h8a1 1 0 001-1l1-14"/></svg>
           Limpar filtros
         </button>
