@@ -27,6 +27,21 @@ def situacao_exames():
 def perfil():
     return render_template("perfil.html")
 
+@app.route("/dashboard_tecnico")
+def dashboard_tecnico():
+    return render_template("dashboard_tecnico.html")
+
+@app.route("/registrar_coletas")
+def registrar_coletas():
+    return render_template("registrar_coletas.html")
+
+@app.route("/coletas_realizadas")
+def coletas_realizadas():
+    return render_template("coletas_realizadas.html")
+
+@app.route("/perfil_tecnico")
+def perfil_tecnico():
+    return render_template("perfil_tecnico.html")
 
 @app.route("/administracao")
 def administracao():

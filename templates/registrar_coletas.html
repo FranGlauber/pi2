@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ExamLife | Registrar coleta</title>
+<link rel="stylesheet" href="/static/registrar_coletas.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <button class="menu-toggle" aria-label="Abrir/fechar menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="logo-block">
+        <!-- Substitua "logo.png" pelo arquivo do logotipo do laboratório -->
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="ExamLife Análises Clínicas" class="logo-img">
+      </div>
+    </div>
+
+    <p class="sidebar-welcome">Seja bem-vindo ao laboratorio!</p>
+
+    <nav class="sidebar-nav">
+      <a href="{{ url_for('dashboard_tecnico') }}" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        </span>
+        Dashboard
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </span>
+        Coletas
+      </a>
+      <a href="#" class="nav-item active">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v6M9 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        Registrar coleta
+      </a>
+      <a href="{{ url_for('coletas_realizadas')}}" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="m8.5 12.5 2.3 2.3L16 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Coletas realizadas
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a href="{{ url_for('perfil_tecnico')}}" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        Meu perfil
+      </a>
+      <a href="{{ url_for('login')}}" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Sair
+      </a>
+    </div>
+  </aside>
+
+  <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+  <div class="main">
+
+    <!-- CARD DE TOPO: REGISTRAR COLETA -->
+    <div class="page-header">
+      <div class="page-header-main">
+        <div class="page-header-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h1>Registrar coleta</h1>
+          <p>Preencha os dados da coleta e relacione com o paciente e os exames solicitados.</p>
+        </div>
+      </div>
+
+      <div class="page-header-note">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <p>A coleta deve estar vinculada ao paciente e aos exames solicitados. Um ou mais exames podem estar relacionados a uma única coleta.</p>
+      </div>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <form class="form-card">
+
+      <div class="field">
+        <label>Paciente</label>
+        <div class="field-input">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input type="text" placeholder="Pesquise pelo nome, CPF ou código do paciente...">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <div class="form-grid">
+
+        <!-- COLUNA ESQUERDA -->
+        <div class="col-left">
+
+          <div class="subsection">
+            <h3>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              Exames solicitados
+            </h3>
+
+            <div class="exam-grid">
+              <label class="exam-item">
+                <input type="checkbox" class="exam-checkbox" checked>
+                <span class="exam-checkbox-box"></span>
+                <span class="exam-name">Hemograma</span>
+              </label>
+              <label class="exam-item">
+                <input type="checkbox" class="exam-checkbox">
+                <span class="exam-checkbox-box"></span>
+                <span class="exam-name">TGO (AST)</span>
+              </label>
+              <label class="exam-item">
+                <input type="checkbox" class="exam-checkbox" checked>
+                <span class="exam-checkbox-box"></span>
+                <span class="exam-name">Glicemia</span>
+              </label>
+              <label class="exam-item">
+                <input type="checkbox" class="exam-checkbox">
+                <span class="exam-checkbox-box"></span>
+                <span class="exam-name">TGP (ALT)</span>
+              </label>
+              <label class="exam-item">
+                <input type="checkbox" class="exam-checkbox">
+                <span class="exam-checkbox-box"></span>
+                <span class="exam-name">Colesterol total</span>
+              </label>
+              <label class="exam-item">
+                <input type="checkbox" class="exam-checkbox">
+                <span class="exam-checkbox-box"></span>
+                <span class="exam-name">Ureia</span>
+              </label>
+              <label class="exam-item">
+                <input type="checkbox" class="exam-checkbox">
+                <span class="exam-checkbox-box"></span>
+                <span class="exam-name">Triglicerídeos</span>
+              </label>
+              <label class="exam-item">
+                <input type="checkbox" class="exam-checkbox">
+                <span class="exam-checkbox-box"></span>
+                <span class="exam-name">Creatinina</span>
+              </label>
+            </div>
+
+            <button type="button" class="link-more">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+              Ver mais exames
+            </button>
+          </div>
+
+          <div class="field">
+            <label>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 2v6h6M8 13h8M8 17h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              Observações
+            </label>
+            <textarea maxlength="500" placeholder="Adicione informações relevantes sobre a coleta..." id="obsField"></textarea>
+            <span class="char-count"><span id="obsCount">0</span>/500</span>
+          </div>
+
+        </div>
+
+        <!-- COLUNA DIREITA -->
+        <div class="col-right">
+
+          <div class="field-grid">
+            <div class="field">
+              <label>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                Data da coleta
+              </label>
+              <div class="field-input">
+                <input type="text" value="10/09/2026">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <div class="field">
+              <label>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Horário
+              </label>
+              <div class="field-input">
+                <input type="text" value="08:35">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              Material coletado
+            </label>
+            <div class="field-select">
+              <select>
+                <option>Selecione o material</option>
+                <option>Sangue venoso</option>
+                <option>Sangue capilar</option>
+                <option>Urina</option>
+                <option>Fezes</option>
+                <option>Swab</option>
+              </select>
+              <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              Responsável pela coleta
+            </label>
+            <div class="field-select">
+              <select>
+                <option>João Santos</option>
+                <option>Ana Souza</option>
+                <option>Carlos Ferreira</option>
+              </select>
+              <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="form-footer">
+        <a href="{{ url_for('dashboard_tecnico') }}" class="link-cancel">Cancelar</a>
+        <button type="submit" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          Registrar coleta
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<script>
+  const obsField = document.getElementById('obsField');
+  const obsCount = document.getElementById('obsCount');
+  obsField.addEventListener('input', () => {
+    obsCount.textContent = obsField.value.length;
+  });
+</script>
+
+</body>
+</html>
