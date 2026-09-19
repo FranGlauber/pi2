@@ -1,5 +1,6 @@
 ﻿from flask import Flask, render_template, request, redirect, url_for, session, flash
 from database.database import conectar, criar_banco
+from controllers.paciente_controller import *
 from functools import wraps
 from datetime import datetime
 
@@ -146,7 +147,7 @@ def recepcao():
     conexao.close()
 
     return render_template(
-        "dashboard_recepcao.html",
+        "recepcao.html",
         total_pacientes=total_pacientes,
         solicitacoes_hoje=solicitacoes_hoje,
         aguardando_coleta=aguardando_coleta,
@@ -195,7 +196,7 @@ def pacientes():
                 )
                 conexao.commit()
                 flash("Paciente cadastrado com sucesso.", "sucesso")
-            except Exception:
+            except Exception as erro:
                 flash("CPF já cadastrado ou dados inválidos.", "erro")
 
     busca = request.args.get("busca", "").strip()
@@ -239,10 +240,17 @@ def solicitar_exames():
         observacoes = request.form.get("observacoes", "").strip()
         exame_ids = request.form.getlist("exame_ids")
 
+        print("DEBUG SOLICITAÇÃO:", dict(request.form))
+        print("PACIENTE:", paciente_id)
+        print("DATA:", data_solicitacao)
+        print("EXAMES:", exame_ids)
+
         if not paciente_id or not data_solicitacao:
-            flash("Selecione o paciente e informe a data da solicita??o.", "erro")
+            flash("Selecione o paciente e informe a data da solicitação.", "erro")
+
         elif not exame_ids:
             flash("Selecione pelo menos um exame.", "erro")
+
         else:
             paciente = conexao.execute(
                 "SELECT id FROM pacientes WHERE id = ?",
@@ -250,7 +258,8 @@ def solicitar_exames():
             ).fetchone()
 
             if paciente is None:
-                flash("Paciente n?o encontrado.", "erro")
+                flash("Paciente não encontrado.", "erro")
+
             else:
                 try:
                     cursor = conexao.execute(
@@ -294,12 +303,24 @@ def solicitar_exames():
                             )
 
                     conexao.commit()
-                    flash("Solicita??o de exames salva com sucesso.", "sucesso")
+
+                    print("SOLICITAÇÃO SALVA:", solicitacao_id)
+
+                    flash(
+                        "Solicitação de exames salva com sucesso.",
+                        "sucesso"
+                    )
+
                     return redirect(url_for("situacao_exames"))
 
-                except Exception:
+                except Exception as erro:
                     conexao.rollback()
-                    flash("N?o foi poss?vel salvar a solicita??o.", "erro")
+                    print("ERRO AO SALVAR SOLICITAÇÃO:", repr(erro))
+
+                    flash(
+                        f"Erro ao salvar solicitação: {erro}",
+                        "erro"
+                    )
 
     pacientes_lista = conexao.execute(
         """
@@ -324,7 +345,6 @@ def solicitar_exames():
         pacientes=pacientes_lista,
         exames=exames_lista
     )
-
 
 
 @app.route("/situacao_exames")
@@ -364,6 +384,7 @@ def situacao_exames():
                 OR CAST(s.id AS TEXT) LIKE ?
             )
         """
+
         parametros.extend([
             f"%{busca}%",
             f"%{busca}%",
@@ -414,6 +435,26 @@ def perfil():
     )
 
 
+@app.route("/dashboard_tecnico")
+def dashboard_tecnico():
+    return render_template("dashboard_tecnico.html")
+
+
+@app.route("/registrar_coletas")
+def registrar_coletas():
+    return render_template("registrar_coletas.html")
+
+
+@app.route("/coletas_realizadas")
+def coletas_realizadas():
+    return render_template("coletas_realizadas.html")
+
+
+@app.route("/perfil_tecnico")
+def perfil_tecnico():
+    return render_template("perfil_tecnico.html")
+
+
 @app.route("/administracao")
 @login_required
 def administracao():
@@ -422,3 +463,5 @@ def administracao():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+

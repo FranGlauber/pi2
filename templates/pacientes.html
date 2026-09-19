@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Pacientes · ExamLife</title>
+  <title>Pacientes Â· ExamLife</title>
   <link rel="stylesheet" href="/static/pacientes.css">
-  {# ATENÇÃO: se a sidebar/header de vocês já está definida em recepcao.css,
+  {# ATENÃ‡ÃƒO: se a sidebar/header de vocÃªs jÃ¡ estÃ¡ definida em recepcao.css,
      troca o link acima (ou soma) para: url_for('static', filename='css/recepcao.css')
-     Sem ver o dashboard_recepcao.html eu não tenho como copiar a marcação exata
-     da sidebar, então deixei uma sidebar própria aqui embaixo (mesmos itens do
-     print) pra não travar vocês. Me manda o dashboard_recepcao.html que eu troco
+     Sem ver o dashboard_recepcao.html eu nÃ£o tenho como copiar a marcaÃ§Ã£o exata
+     da sidebar, entÃ£o deixei uma sidebar prÃ³pria aqui embaixo (mesmos itens do
+     print) pra nÃ£o travar vocÃªs. Me manda o dashboard_recepcao.html que eu troco
      por essa mesma estrutura/classes, pra ficar 100% igual sem duplicar CSS.
-     A tela ficou só com o CADASTRO de paciente — a consulta/listagem
-     continua sendo feita na tabela que já existe na dashboard. #}
+     A tela ficou sÃ³ com o CADASTRO de paciente â€” a consulta/listagem
+     continua sendo feita na tabela que jÃ¡ existe na dashboard. #}
 </head>
 <body>
 <div class="layout">
@@ -22,11 +22,11 @@
         <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
       <div class="sidebar__logo">
-        <img src="/static/logo.png" alt="ExamLife - Análises clínicas">
-        {# Substitui o src acima pelo caminho real do arquivo de logo de vocês. #}
+        <img src="/static/logo.png" alt="ExamLife - AnÃ¡lises clÃ­nicas">
+        {# Substitui o src acima pelo caminho real do arquivo de logo de vocÃªs. #}
       </div>
     </div>
-    <p class="sidebar__greeting">Seja bem vinda à recepção!</p>
+    <p class="sidebar__greeting">Seja bem vinda Ã  recepÃ§Ã£o!</p>
     <nav class="sidebar__nav">
       <a href="{{ url_for('recepcao') }}" class="nav-item is-active">
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
@@ -46,15 +46,15 @@
       </a>
       <a href="{{ url_for('situacao_exames')}}" class="nav-item">
         <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
-        Situação dos exames
+        SituaÃ§Ã£o dos exames
       </a>
       <a href="#" class="nav-item">
         <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
-        Convênio público
+        ConvÃªnio pÃºblico
       </a>
       <a href="#" class="nav-item">
         <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
-        Convênio particular
+        ConvÃªnio particular
       </a>
     </nav>
     <div class="sidebar__footer">
@@ -77,7 +77,7 @@
       <p>Preencha os dados abaixo para cadastrar um paciente</p>
     </div>
 
-    <form method="POST" action="{{ url_for('pacientes') }}" class="form-grid" novalidate>
+    <form method="POST" action="{{ url_for('pacientes') }}" class="form-grid">
 
       <div class="form-field span-2">
         <label for="nome">Nome completo</label>
@@ -121,26 +121,45 @@
 
       <div class="form-field span-2">
         <label for="endereco">Endereço</label>
-        <input type="text" id="endereco" name="endereco" placeholder="Rua, número, bairro">
+        <input type="text" id="endereco" name="endereco" placeholder="Rua, avenida...">
       </div>
 
       <div class="form-field">
-        <label for="cidade">Cidade / UF</label>
-        <input type="text" id="cidade" name="cidade" placeholder="Cidade - UF">
+        <label for="numero">Número</label>
+        <input type="text" id="numero" name="numero" placeholder="123">
       </div>
 
-      <div class="form-field span-4">
-        <label for="observacoes">Observações</label>
-        <textarea id="observacoes" name="observacoes" rows="2" placeholder="Informações adicionais (opcional)"></textarea>
+      <div class="form-field">
+        <label for="complemento">Complemento</label>
+        <input type="text" id="complemento" name="complemento" placeholder="Apto, casa...">
+      </div>
+
+      <div class="form-field">
+        <label for="bairro">Bairro</label>
+        <input type="text" id="bairro" name="bairro" placeholder="Bairro">
+      </div>
+
+      <div class="form-field">
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" placeholder="Cidade">
+      </div>
+
+      <div class="form-field">
+        <label for="estado">Estado</label>
+        <input type="text" id="estado" name="estado" placeholder="CE">
       </div>
 
       <div class="form-actions span-4">
         <button type="reset" class="btn btn--ghost">Cancelar</button>
+
         <button type="submit" class="btn btn--primary">
-          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          <svg viewBox="0 0 24 24">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
           Salvar paciente
         </button>
       </div>
+
     </form>
   </section>
 
@@ -149,3 +168,4 @@
 </div><!-- /.layout -->
 </body>
 </html>
+
