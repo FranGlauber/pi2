@@ -35,36 +35,28 @@ def recepcionista_required(func):
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email", "").strip()
-        senha = request.form.get("senha", "")
+        email = request.form.get("email").strip()
+        senha = request.form.get("senha")
+        cargo = request.form.get("cargo")
 
         conexao = conectar()
 
-        usuario = conexao.execute(
-            """
-            SELECT id, nome, email, senha, perfil
-            FROM usuarios
-            WHERE email = ? AND senha = ?
-            """,
-            (email, senha)
+        funcionario = conexao.execute(
+            "SELECT * FROM funcionarios WHERE email = ? AND senha = ? AND cargo = ?",
+            (email, senha, cargo)
         ).fetchone()
 
         conexao.close()
 
-        if usuario:
-            session["usuario_id"] = usuario["id"]
-            session["nome"] = usuario["nome"]
-            session["email"] = usuario["email"]
-            session["perfil"] = usuario["perfil"]
+        if funcionario:
+            session["id"] = funcionario["id"]
+            session["email"] = funcionario["email"]
+            session["senha"] = funcionario["senha"]
+            session["perfil"] = funcionario["cargo"]
 
-            if usuario["perfil"] == "recepcionista":
-                return redirect(url_for("recepcao"))
-
-            return redirect(url_for("login"))
-
-        flash("E-mail ou senha inválidos.", "erro")
-
-    return render_template("login.html")
+        else:
+            flash("E-mail ou senha inválidos.", "erro")
+            return render_template("login.html")
 
 
 @app.route("/logout")

@@ -48,7 +48,7 @@
         <p>Selecione seu perfil e entre com suas credenciais.</p>
       </header>
 
-      <form class="login-form" action="{{ url_for("login") }}" method="post">
+      <form class="login-form" action="{{ url_for('login') }}" method="POST">
 
         <fieldset class="role-select">
           <legend>Quem está entrando?</legend>
@@ -56,7 +56,7 @@
           <div class="role-grid">
 
             <label class="role-card">
-              <input type="radio" name="perfil" value="administrador">
+              <input type="radio" name="perfil" id="perfil" value="administrador">
               <span class="role-icon">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3 4 6v6c0 5 3.4 8.7 8 9 4.6-.3 8-4 8-9V6l-8-3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
@@ -64,7 +64,7 @@
             </label>
 
             <label class="role-card">
-              <input type="radio" name="perfil" value="recepcionista" checked>
+              <input type="radio" name="perfil" id="perfil" value="recepcionista" checked>
               <span class="role-icon">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.7"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
               </span>
@@ -72,7 +72,7 @@
             </label>
 
             <label class="role-card">
-              <input type="radio" name="perfil" value="analista">
+              <input type="radio" name="perfil" id="perfil" value="analista">
               <span class="role-icon">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2h6M7.5 14h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
               </span>
@@ -80,7 +80,7 @@
             </label>
 
             <label class="role-card">
-              <input type="radio" name="perfil" value="tecnico">
+              <input type="radio" name="perfil" id="perfil" value="tecnico">
               <span class="role-icon">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2v6M12 22v-6M4.2 7.8l4.2 2.4M15.6 13.8l4.2 2.4M4.2 16.2l4.2-2.4M15.6 10.2l4.2-2.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg>
               </span>
@@ -88,7 +88,7 @@
             </label>
 
             <label class="role-card role-card-wide">
-              <input type="radio" name="perfil" value="paciente">
+              <input type="radio" name="perfil" id="perfil" value="paciente">
               <span class="role-icon">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.7"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
               </span>
