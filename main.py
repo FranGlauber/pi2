@@ -46,10 +46,18 @@ def registrar_coletas():
 def registrar_exames():
     return render_template("registrar_exames.html")
 
+@app.route("/situacao_exames")
+def situacao_exames():
+    return render_template("situacao_exames.html")
+
 @app.route("/solicitar_exames")
 def solicitar_exames():
     return render_template("solicitar_exames.html")
 
+@app.route("/logout")
+def logout():
+    #session.clear()
+    return redirect(url_for("login"))
 
 if __name__ == "__main__":
     app.run(debug=True)

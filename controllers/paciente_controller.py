@@ -1,5 +1,6 @@
 from flask import request, render_template, redirect, session, url_for
 from models.paciente_model import *
+from main import *
 #from auth import login_required
 #from app import app
 
