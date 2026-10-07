@@ -1,5 +1,5 @@
 ﻿from flask import Flask, render_template, request, redirect, url_for, session, flash
-from datetime import datetime
+#from datetime import datetime
 
 from controllers.paciente_controller import *
 
