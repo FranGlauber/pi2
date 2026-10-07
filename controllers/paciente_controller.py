@@ -1,7 +1,7 @@
-from app import app
 from flask import request, render_template, redirect, session, url_for
 from models.paciente_model import *
 #from auth import login_required
+#from app import app
 
 # Criando a sessão para interagir com o banco de dados
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
