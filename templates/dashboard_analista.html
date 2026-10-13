@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamLife | Analista laboratorial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard_analista.css') }}">
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-topo">
+      <button class="btn-menu" id="btnMenu" aria-label="Abrir/fechar menu">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <!-- ESPAÇO DA LOGO: substitua static/logo.png pela sua imagem -->
+      <a href="#" class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo ExamLife">
+      </a>
+    </div>
+
+    <p class="boas-vindas">Seja bem-vindo à sua área de trabalho!</p>
+
+    <nav class="menu">
+      <a href="#" class="menu-item ativo">
+        <svg viewBox="0 0 24 24" class="preenchido"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="{{url_for('coletas_recebidas')}}" class="menu-item">
+        <svg viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg>
+        <span>Coletas recebidas</span>
+      </a>
+      <a href="{{url_for('registro_resutado')}}" class="menu-item">
+        <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/></svg>
+        <span>Resultados</span>
+      </a>
+      <a href="{{url_for('emissao_laudos')}}" class="menu-item">
+        <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+        <span>Laudos</span>
+      </a>
+      <a href="{{url_for('historico_exames')}}" class="menu-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span>Histórico</span>
+      </a>
+
+      <hr>
+
+      <a href="{{url_for('perfil_analista')}}" class="menu-item">
+        <svg viewBox="0 0 24 24" class="preenchido"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3.2" fill="#fff"/><path d="M6 18.5c1.5-3 10.5-3 12 0" fill="#fff"/></svg>
+        <span>Meu perfil</span>
+      </a>
+      <a href="{{url_for('login')}}" class="menu-item">
+        <svg viewBox="0 0 24 24"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></svg>
+        <span>Sair</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ================= ÁREA PRINCIPAL ================= -->
+  <div class="main">
+
+    <!-- TOPO -->
+    <header class="topbar">
+      <div class="topbar-titulo">
+        <h2>Analista laboratorial</h2>
+        <span>Bom dia, Fernanda</span>
+      </div>
+
+      <div class="busca">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input type="text" placeholder="Faça sua pesquisa...">
+      </div>
+
+      <div class="topbar-acoes">
+        <button class="icone-btn" aria-label="Notificações">
+          <svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4"/></svg>
+          <span class="contador">2</span>
+        </button>
+        <button class="icone-btn" aria-label="Mensagens">
+          <svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1.200-4.5A8 8 0 1 1 21 12z"/></svg>
+        </button>
+        <a href="#" class="avatar-topo" aria-label="Meu perfil">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5"/><path d="M3.5 21c.8-5 4-7 8.5-7s7.7 2 8.5 7z"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main class="conteudo">
+
+      <!-- Cabeçalho de boas-vindas -->
+      <section class="saudacao">
+        <div class="saudacao-info">
+          <div class="saudacao-icone">
+            <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 19a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3M8 15h8"/></svg>
+          </div>
+          <div>
+            <h1>Olá, Fernanda!</h1>
+            <p>Aqui está o resumo das análises e laudos do dia.</p>
+          </div>
+        </div>
+        <div class="saudacao-data">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+          <div>
+            <strong>20 de outubro de 2026</strong>
+            <span>Sexta-feira</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cards de estatísticas -->
+      <section class="stats">
+        <a href="#" class="stat">
+          <div class="stat-icone"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg></div>
+          <div class="stat-texto"><strong>18</strong><span>Coletas recebidas</span></div>
+          <svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#" class="stat">
+          <div class="stat-icone"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 19a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3M8 15h8"/></svg></div>
+          <div class="stat-texto"><strong>12</strong><span>Em análise</span></div>
+          <svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#" class="stat">
+          <div class="stat-icone"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
+          <div class="stat-texto"><strong>08</strong><span>Resultados liberados</span></div>
+          <svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#" class="stat">
+          <div class="stat-icone"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
+          <div class="stat-texto"><strong>05</strong><span>Laudos emitidos</span></div>
+          <svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </section>
+
+      <!-- Grade principal -->
+      <div class="grade">
+
+        <div class="coluna-principal">
+
+          <!-- BANNER: espaço inteiro para a sua foto (somente imagem) -->
+          <section class="banner">
+            <img src="{{ url_for('static', filename='banner_analista.jpg') }}" alt="Banner do laboratório">
+          </section>
+
+          <!-- Tabela -->
+          <section class="card tabela-card">
+            <div class="card-topo">
+              <h3>
+                <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 19a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3M8 15h8"/></svg>
+                Coletas recebidas para análise
+              </h3>
+              <a href="{{url_for('coletas_recebidas')}}" class="btn-contorno">
+                <svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                Ver todas as coletas
+              </a>
+            </div>
+
+            <div class="tabela-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Paciente</th>
+                    <th>Exames</th>
+                    <th>Data da coleta</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="paciente"><span class="avatar">MA</span><div><strong>Maria Aparecida Silva</strong><small>123.456.789-00</small></div></div></td>
+                    <td><div class="chips"><span>Hemograma</span><span>Glicemia</span><span>Colesterol</span></div></td>
+                    <td class="data">10/09/2026<br>08:35</td>
+                    <td><span class="status analise">Em análise</span></td>
+                    <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Ver detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><div class="paciente"><span class="avatar">JS</span><div><strong>João Ferreira Santos</strong><small>987.654.321-00</small></div></div></td>
+                    <td><div class="chips"><span>Hemograma</span></div></td>
+                    <td class="data">10/09/2026<br>08:50</td>
+                    <td><span class="status aguardando">Aguardando</span></td>
+                    <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Ver detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><div class="paciente"><span class="avatar">CA</span><div><strong>Carla Mendes Oliveira</strong><small>456.789.123-00</small></div></div></td>
+                    <td><div class="chips"><span>TSH</span><span>T4 Livre</span></div></td>
+                    <td class="data">10/09/2026<br>09:10</td>
+                    <td><span class="status analise">Em análise</span></td>
+                    <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Ver detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><div class="paciente"><span class="avatar">PL</span><div><strong>Paulo Henrique Lima</strong><small>789.123.456-00</small></div></div></td>
+                    <td><div class="chips"><span>Glicemia</span></div></td>
+                    <td class="data">10/09/2026<br>09:30</td>
+                    <td><span class="status liberado">Resultado liberado</span></td>
+                    <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Ver detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><div class="paciente"><span class="avatar">FS</span><div><strong>Fernanda Souza Alves</strong><small>321.654.987-00</small></div></div></td>
+                    <td><div class="chips"><span>Hemograma</span><span>Colesterol</span></div></td>
+                    <td class="data">10/09/2026<br>10:00</td>
+                    <td><span class="status aguardando">Aguardando</span></td>
+                    <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Ver detalhes</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="paginacao">
+              <span>Mostrando 1 a 5 de 18 coletas recebidas</span>
+              <div class="paginas">
+                <button aria-label="Anterior">&lsaquo;</button>
+                <button class="ativa">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button aria-label="Próxima">&rsaquo;</button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Coluna lateral -->
+        <aside class="coluna-lateral">
+
+          <section class="card atalhos">
+            <h3>
+              <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg>
+              Atalhos rápidos
+            </h3>
+            <a href="#" class="atalho">
+              <span class="atalho-icone"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/></svg></span>
+              <span>Resultados de exames</span>
+              <svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#" class="atalho">
+              <span class="atalho-icone"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+              <span>Laudos</span>
+              <svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#" class="atalho">
+              <span class="atalho-icone"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <span>Histórico de análises</span>
+              <svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </a>
+          </section>
+
+          <section class="atencao">
+            <div class="atencao-topo">
+              <svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>
+              <div>
+                <h4>Fique atento!</h4>
+                <p>Existem 3 coletas aguardando resultado há mais de 24 horas.</p>
+                <a href="#">Ver detalhes <span>→</span></a>
+              </div>
+            </div>
+          </section>
+
+          <section class="card frase">
+            <p>Juntos por resultados<br>mais precisos e confiáveis.</p>
+            <svg viewBox="0 0 60 70" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10h20M25 10v18L10 55a5 5 0 0 0 5 8h30a5 5 0 0 0 5-8L35 28V10"/></svg>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  // Abre/fecha o menu lateral
+  document.getElementById('btnMenu').addEventListener('click', function () {
+    document.getElementById('sidebar').classList.toggle('recolhida');
+  });
+</script>
+</body>
+</html>

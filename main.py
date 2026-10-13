@@ -59,5 +59,30 @@ def logout():
     #session.clear()
     return redirect(url_for("login"))
 
+@app.route("/analista")
+def analista():
+    return render_template("dashboard_analista.html")
+
+@app.route("/coletas_recebidas")
+def coletas_recebidas():
+    return render_template("coletas_recebidas.html")
+
+@app.route("/registro_resultados")
+def registro_resutado():
+    return render_template("registro_resultados.html")
+
+@app.route("/emissao_laudos")
+def emissao_laudos():
+    return render_template("emissao_laudos.html")
+
+@app.route("/historico_exames")
+def historico_exames():
+    return render_template("historico_exames.html")
+
+@app.route("/perfil_analista")
+def perfil_analista():
+    return render_template("perfil_analista.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

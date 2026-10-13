@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamLife | Coletas recebidas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='coletas_recebidas.css') }}">
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-topo">
+      <button class="btn-menu" id="btnMenu" aria-label="Abrir/fechar menu">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <!-- ESPAÇO DA LOGO: substitua static/logo.png pela sua imagem -->
+      <a href="#" class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo ExamLife">
+      </a>
+    </div>
+
+    <p class="boas-vindas">Seja bem-vindo à sua área de trabalho!</p>
+
+    <nav class="menu">
+      <a href="{{url_for('analista')}}" class="menu-item">
+        <svg viewBox="0 0 24 24" class="preenchido"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="menu-item ativo">
+        <svg viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg>
+        <span>Coletas recebidas</span>
+      </a>
+      <a href="{{url_for('registro_resutado')}}" class="menu-item">
+        <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/></svg>
+        <span>Resultados</span>
+      </a>
+      <a href="{{url_for('emissao_laudos')}}" class="menu-item">
+        <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+        <span>Laudos</span>
+      </a>
+      <a href="{{url_for('historico_exames')}}" class="menu-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span>Histórico</span>
+      </a>
+
+      <hr>
+
+      <a href="{{url_for('perfil_analista')}}" class="menu-item">
+        <svg viewBox="0 0 24 24" class="preenchido"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3.2" fill="#fff"/><path d="M6 18.5c1.5-3 10.5-3 12 0" fill="#fff"/></svg>
+        <span>Meu perfil</span>
+      </a>
+      <a href="{{url_for('login')}}" class="menu-item">
+        <svg viewBox="0 0 24 24"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></svg>
+        <span>Sair</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ================= ÁREA PRINCIPAL ================= -->
+  <main class="main">
+    <div class="conteudo">
+
+      <!-- Cabeçalho da página -->
+      <section class="titulo-pagina">
+        <div class="titulo-info">
+          <div class="titulo-icone">
+            <svg viewBox="0 0 24 24"><path d="M8 3h8M9 3v13a3 3 0 0 0 6 0V3M9 9h6"/></svg>
+          </div>
+          <div>
+            <h1>Coletas recebidas</h1>
+            <p>Visualize todas as coletas recebidas no laboratório e acompanhe o status de cada uma delas.</p>
+          </div>
+        </div>
+        <div class="data-topo">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+          <div>
+            <strong>20 de outubro de 2026</strong>
+            <span>Sexta-feira</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filtros -->
+      <section class="filtros">
+        <div class="campo-busca">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input type="text" id="filtroBusca" placeholder="Buscar por paciente, código da coleta ou nº da solicitação...">
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtroPeriodo">Período</label>
+          <div class="select-wrap">
+            <select id="filtroPeriodo">
+              <option>Hoje</option>
+              <option>Últimos 7 dias</option>
+              <option>Últimos 30 dias</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtroStatus">Status</label>
+          <div class="select-wrap">
+            <select id="filtroStatus">
+              <option value="todos">Todos</option>
+              <option value="analise">Em análise</option>
+              <option value="aguardando">Aguardando</option>
+              <option value="liberado">Resultado liberado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtroMaterial">Material</label>
+          <div class="select-wrap com-icone">
+            <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 19a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3M8 15h8"/></svg>
+            <select id="filtroMaterial">
+              <option value="todos">Todos</option>
+              <option value="Sangue">Sangue</option>
+              <option value="Urina">Urina</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn-filtrar" id="btnFiltrar">
+          <svg viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>
+          Filtrar
+        </button>
+      </section>
+
+      <!-- Estatísticas -->
+      <section class="stats">
+        <div class="stat">
+          <div class="stat-icone"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 19a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3M8 15h8"/></svg></div>
+          <div class="stat-texto"><strong>24</strong><span>Coletas recebidas</span><small>no período selecionado</small></div>
+        </div>
+        <div class="stat">
+          <div class="stat-icone"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div class="stat-texto"><strong>10</strong><span>Em análise</span><small>aguardando processamento</small></div>
+        </div>
+        <div class="stat">
+          <div class="stat-icone"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
+          <div class="stat-texto"><strong>12</strong><span>Resultados liberados</span><small>prontos para laudo</small></div>
+        </div>
+        <div class="stat">
+          <div class="stat-icone"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
+          <div class="stat-texto"><strong>2</strong><span>Aguardando conferência</span><small>laudos em revisão</small></div>
+        </div>
+      </section>
+
+      <!-- Grade: tabela + lateral -->
+      <div class="grade">
+
+        <section class="card tabela-card">
+          <div class="card-topo">
+            <h3>
+              <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 19a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3M8 15h8"/></svg>
+              Coletas recebidas
+            </h3>
+            <button class="btn-contorno">
+              <svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></svg>
+              Exportar relatório
+            </button>
+          </div>
+
+          <div class="tabela-wrap">
+            <table id="tabelaColetas">
+              <thead>
+                <tr>
+                  <th>Paciente</th>
+                  <th>Solicitação nº</th>
+                  <th>Exames</th>
+                  <th>Material</th>
+                  <th>Data da coleta</th>
+                  <th>Horário</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr data-status="analise">
+                <td><div class="paciente"><span class="avatar">MA</span><div><strong>Maria Aparecida Silva</strong><small>123.456.789-00</small></div></div></td>
+                <td class="sol">#000125</td>
+                <td><div class="chips"><span>Hemograma</span><span>Glicemia</span><span>+1</span></div></td>
+                <td><span class="material"><svg class="ic-material" viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg>Sangue</span></td>
+                <td class="data">10/09/2026</td>
+                <td><span class="horario"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>08:35</span></td>
+                <td><span class="status analise">Em análise</span></td>
+                <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Visualizar<svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></td>
+              </tr>
+              <tr data-status="aguardando">
+                <td><div class="paciente"><span class="avatar">JS</span><div><strong>João Ferreira Santos</strong><small>987.654.321-00</small></div></div></td>
+                <td class="sol">#000126</td>
+                <td><div class="chips"><span>Glicemia</span></div></td>
+                <td><span class="material"><svg class="ic-material" viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg>Sangue</span></td>
+                <td class="data">10/09/2026</td>
+                <td><span class="horario"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>08:50</span></td>
+                <td><span class="status aguardando">Aguardando</span></td>
+                <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Visualizar<svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></td>
+              </tr>
+              <tr data-status="liberado">
+                <td><div class="paciente"><span class="avatar">CA</span><div><strong>Carla Mendes Oliveira</strong><small>456.789.123-00</small></div></div></td>
+                <td class="sol">#000127</td>
+                <td><div class="chips"><span>TSH</span><span>T4 Livre</span></div></td>
+                <td><span class="material"><svg class="ic-material" viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg>Sangue</span></td>
+                <td class="data">10/09/2026</td>
+                <td><span class="horario"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>09:10</span></td>
+                <td><span class="status liberado">Resultado liberado</span></td>
+                <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Visualizar<svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></td>
+              </tr>
+              <tr data-status="analise">
+                <td><div class="paciente"><span class="avatar">PL</span><div><strong>Paulo Henrique Lima</strong><small>789.123.456-00</small></div></div></td>
+                <td class="sol">#000128</td>
+                <td><div class="chips"><span>Glicemia</span></div></td>
+                <td><span class="material"><svg class="ic-material" viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg>Sangue</span></td>
+                <td class="data">10/09/2026</td>
+                <td><span class="horario"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>09:30</span></td>
+                <td><span class="status analise">Em análise</span></td>
+                <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Visualizar<svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></td>
+              </tr>
+              <tr data-status="aguardando">
+                <td><div class="paciente"><span class="avatar">FS</span><div><strong>Fernanda Souza Alves</strong><small>321.654.987-00</small></div></div></td>
+                <td class="sol">#000129</td>
+                <td><div class="chips"><span>Hemograma</span><span>Colesterol</span></div></td>
+                <td><span class="material"><svg class="ic-material" viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg>Sangue</span></td>
+                <td class="data">10/09/2026</td>
+                <td><span class="horario"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>10:00</span></td>
+                <td><span class="status aguardando">Aguardando</span></td>
+                <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Visualizar<svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></td>
+              </tr>
+              <tr data-status="liberado">
+                <td><div class="paciente"><span class="avatar">RL</span><div><strong>Rafael Lima Costa</strong><small>654.321.987-00</small></div></div></td>
+                <td class="sol">#000130</td>
+                <td><div class="chips"><span>Ureia</span><span>Creatinina</span></div></td>
+                <td><span class="material"><svg class="ic-material" viewBox="0 0 24 24"><path d="M8 3h8M9 3v13a3 3 0 0 0 6 0V3M9 9h6"/></svg>Urina</span></td>
+                <td class="data">10/09/2026</td>
+                <td><span class="horario"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>10:25</span></td>
+                <td><span class="status liberado">Resultado liberado</span></td>
+                <td><a href="#" class="btn-contorno pequeno"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Visualizar<svg class="seta" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="paginacao">
+            <span>Mostrando 1 a 6 de 24 coletas recebidas</span>
+            <div class="paginas">
+              <button aria-label="Anterior">&lsaquo;</button>
+              <button class="ativa">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>4</button>
+              <span class="reticencias">...</span>
+              <button>8</button>
+              <button aria-label="Próxima">&rsaquo;</button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="coluna-lateral">
+
+          <section class="card resumo">
+            <h3>
+              <svg viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16l4-5 3 3 5-7"/></svg>
+              Resumo do dia
+            </h3>
+            <ul>
+              <li><span class="ponto-icone"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg></span><span class="rotulo">Coletas recebidas</span><b>24</b></li>
+              <li><span class="ponto-icone azul"><svg viewBox="0 0 24 24" class="preenchido"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg></span><span class="rotulo">Em análise</span><b class="azul">10</b></li>
+              <li><span class="ponto-icone verde"><svg viewBox="0 0 24 24" class="preenchido"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg></span><span class="rotulo">Resultados liberados</span><b>12</b></li>
+              <li><span class="ponto-icone roxo"><svg viewBox="0 0 24 24" class="preenchido"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg></span><span class="rotulo">Aguardando conferência</span><b class="roxo">2</b></li>
+            </ul>
+          </section>
+
+          <section class="card legenda">
+            <h3>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+              Status das coletas
+            </h3>
+            <ul>
+              <li><i class="bolinha azul"></i>Em análise</li>
+              <li><i class="bolinha roxo"></i>Aguardando</li>
+              <li><i class="bolinha verde"></i>Resultado liberado</li>
+              <li><i class="bolinha laranja"></i>Conferência necessária</li>
+            </ul>
+          </section>
+
+          <section class="dica">
+            <svg class="dica-icone" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>
+            <div>
+              <h4>Dica</h4>
+              <p>Clique em "Visualizar" para ver mais detalhes da coleta, exames solicitados e histórico do paciente.</p>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // Abre/fecha o menu lateral
+  document.getElementById('btnMenu').addEventListener('click', function () {
+    document.getElementById('sidebar').classList.toggle('recolhida');
+  });
+
+  // Filtro simples da tabela (busca + status + material)
+  document.getElementById('btnFiltrar').addEventListener('click', function () {
+    var busca = document.getElementById('filtroBusca').value.toLowerCase();
+    var status = document.getElementById('filtroStatus').value;
+    var material = document.getElementById('filtroMaterial').value;
+
+    document.querySelectorAll('#tabelaColetas tbody tr').forEach(function (tr) {
+      var okBusca = tr.textContent.toLowerCase().indexOf(busca) !== -1;
+      var okStatus = status === 'todos' || tr.dataset.status === status;
+      var okMaterial = material === 'todos' || tr.querySelector('.material').textContent.trim() === material;
+      tr.style.display = (okBusca && okStatus && okMaterial) ? '' : 'none';
+    });
+  });
+</script>
+</body>
+</html>
