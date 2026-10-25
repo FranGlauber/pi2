@@ -1,3 +1,4 @@
+from app import app    
 from flask import request, render_template, redirect, session, url_for
 from main import *
 from models.paciente_model import *

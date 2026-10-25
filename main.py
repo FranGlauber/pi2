@@ -7,17 +7,11 @@ from auth import login_required
 # MODELS(Modelos das tabelas do banco de dados)
 from models.conexao import Base, Session, engine
 from models.administrador_model import *
-from models.analista_model import *
 from models.paciente_model import *
-from models.recepcao_model import *
-from models.tecnico_model import *
 
 # CONTROLLERS (Funções do CRUD)
 from controllers.administrador_controller import *
-from controllers.analista_controller import *
 from controllers.paciente_controller import *
-from controllers.recepcao_controller import *
-from controllers.tecnico_controller import *
 
 # ROTAS (URLs do sistema)
 
@@ -26,31 +20,13 @@ def login():
     email = request.form.get("email")
     senha = request.form.get("senha")
 
-
     db = Session()
-    adm = db.query(Funcionarios).filter(Funcionarios.email==email, Funcionarios.senha==senha, Funcionarios.cargo=="administrador").first()
-    rec = db.query(Funcionarios).filter(Funcionarios.email==email, Funcionarios.senha==senha, Funcionarios.cargo=="recepcionista").first()
-    ana = db.query(Funcionarios).filter(Funcionarios.email==email, Funcionarios.senha==senha, Funcionarios.cargo=="analista").first()
-    tec = db.query(Funcionarios).filter(Funcionarios.email==email, Funcionarios.senha==senha, Funcionarios.cargo=="tecnico").first()
-    #pac = db.query(Paciente).filter(Paciente.email==email, Paciente.senha==senha).first()
+    user = db.query(Funcionarios).filter(Funcionarios.email==email, Funcionarios.senha==senha).first()
 
-
-    if adm:
-        session['user_id'] = adm.id
-        session['user_name'] = adm.nome
+    if user:
+        session['user_id'] = user.id
+        session['user_name'] = user.nome
         return render_template('dashboard_admin.html')
-    elif rec:
-        session['user_id'] = rec.id
-        session['user_name'] = rec.nome
-        return render_template('dashboard_recepcao.html')
-    elif ana:
-        session['user_id'] = ana.id
-        session['user_name'] = ana.nome
-        return render_template('dashboard_analista.html')
-    elif tec:
-        session['user_id'] = tec.id
-        session['user_name'] = tec.nome
-        return render_template('dashboard_tecnico.html')
     else:
         return render_template('index.html', error="Email ou senha incorretos.")
 
