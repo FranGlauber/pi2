@@ -9,7 +9,7 @@ class Funcionarios(Base):
  sexo = Column("sexo", String(10))
  telefone = Column("telefone", String(15))
  email = Column("email", String(100))
- senha = Column("senha", String(10))
+ senha = Column("senha", String(255))
  endereco = Column("endereco", String(200))
  cidade = Column("cidade", String(100))
  cargo = Column("cargo", String(200))

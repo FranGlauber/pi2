@@ -1,99 +1,172 @@
+from flask import request, render_template, redirect, url_for, session, flash
+from werkzeug.security import generate_password_hash
+
 from app import app
-from flask import request, render_template, redirect, session, url_for
-from main import *
-from models.administrador_model import *
-#from auth import login_required
+from auth import cargo_required
+from models.conexao import Session
+from models.administrador_model import Funcionarios
 
-# Criando a sessão para interagir com o banco de dados
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# Cargos aceitos no cadastro (devem bater com DASHBOARD_POR_CARGO do main.py)
+CARGOS_VALIDOS = {"administrador", "recepcionista", "tecnico", "analista"}
 
-# rotas
+
+def normalizar_cargo(cargo):
+    return (cargo or "").strip().lower()
+
+
+# ---------------------------------------------------------------
+# FORMULÁRIO DE NOVO FUNCIONÁRIO
+# ---------------------------------------------------------------
 @app.route("/funcionario/novo")
+@cargo_required("administrador")
 def inserir_funcionario():
- return render_template("funcionarios.html")
+    return render_template("funcionarios.html")
 
-@app.route("/funcionario/create", methods=['POST'])
-#@login_required
+
+# ---------------------------------------------------------------
+# CRIAR
+# ---------------------------------------------------------------
+@app.route("/funcionario/create", methods=["POST"])
+@cargo_required("administrador")
 def criar_funcionario():
- if request.method == 'POST':
- # Captura os dados enviados pelo formulário
-    cpf = request.form['cpf']
-    nome = request.form['nome']
-    data = request.form['data']
-    sexo = request.form['sexo']
-    telefone = request.form['telefone']
-    email = request.form['email']
-    senha = request.form['senha']
-    endereco = request.form['endereco']
-    cidade = request.form['cidade']
-    cargo = request.form['cargo']
+    cpf = request.form.get("cpf", "").strip()
+    nome = request.form.get("nome", "").strip()
+    data = request.form.get("data")
+    sexo = request.form.get("sexo")
+    telefone = request.form.get("telefone", "").strip()
+    email = request.form.get("email", "").strip()
+    senha = request.form.get("senha", "")
+    endereco = request.form.get("endereco", "").strip()
+    cidade = request.form.get("cidade", "").strip()
+    cargo = normalizar_cargo(request.form.get("cargo"))
 
- # Cria um novo funcionário
- new_funcionario = Funcionarios(cpf=cpf, nome=nome, data=data, sexo=sexo, telefone=telefone,
-                                    email=email, senha=senha, endereco=endereco, cidade=cidade, cargo=cargo)
+    if not email or not senha:
+        flash("Email e senha são obrigatórios.")
+        return redirect(url_for("listar_funcionarios"))
 
- # Cria um novo funcionário no banco de dados
- db = SessionLocal()
+    if cargo not in CARGOS_VALIDOS:
+        flash("Cargo inválido.")
+        return redirect(url_for("listar_funcionarios"))
 
- # Adiciona o novo funcionário ao banco de dados
- db.add(new_funcionario)
- db.commit()
- return render_template('funcionarios.html', funcionarios=db.query(Funcionarios).all())
+    with Session() as db:
+        # Impede dois funcionários com o mesmo email
+        if db.query(Funcionarios).filter(Funcionarios.email == email).first():
+            flash("Já existe um funcionário com esse email.")
+            return redirect(url_for("listar_funcionarios"))
 
+        novo = Funcionarios(
+            cpf=cpf,
+            nome=nome,
+            data=data,
+            sexo=sexo,
+            telefone=telefone,
+            email=email,
+            senha=generate_password_hash(senha),  # <- hash, nunca texto puro
+            endereco=endereco,
+            cidade=cidade,
+            cargo=cargo,
+        )
+        db.add(novo)
+        db.commit()
+
+    return redirect(url_for("listar_funcionarios"))
+
+
+# ---------------------------------------------------------------
+# LISTAR
+# ---------------------------------------------------------------
 @app.route("/funcionario/lista")
-#@login_required
+@cargo_required("administrador")
 def listar_funcionarios():
-    db = SessionLocal()
-    # Consultar todos os funcionários
-    funcionarios = db.query(Funcionarios).all()
-    # Renderizar o HTML passando os dados
-    return render_template('funcionarios.html', funcionarios=funcionarios)
+    with Session() as db:
+        funcionarios = db.query(Funcionarios).all()
+        return render_template("funcionarios.html", funcionarios=funcionarios)
 
-@app.route('/funcionario/deletar/<int:item_id>')
-#@login_required
+
+# ---------------------------------------------------------------
+# DELETAR
+# ---------------------------------------------------------------
+@app.route("/funcionario/deletar/<int:item_id>")
+@cargo_required("administrador")
 def deletar_funcionario(item_id):
-    db = SessionLocal()
-    item = db.query(Funcionarios).get(item_id) # Busca o item pelo id
-    if item:
-        db.delete(item) # Deleta o item
-        db.commit()
-    return render_template('funcionarios.html', funcionarios=db.query(Funcionarios).all())
+    # Impede o administrador de apagar a própria conta
+    if item_id == session.get("user_id"):
+        flash("Você não pode excluir o seu próprio usuário.")
+        return redirect(url_for("listar_funcionarios"))
 
+    with Session() as db:
+        item = db.get(Funcionarios, item_id)
+        if item:
+            db.delete(item)
+            db.commit()
+
+    return redirect(url_for("listar_funcionarios"))
+
+
+# ---------------------------------------------------------------
+# EDITAR (formulário)
+# ---------------------------------------------------------------
 @app.route("/funcionario/editar/<int:id>")
-#@login_required
+@cargo_required("administrador")
 def editar_funcionario(id):
-    db = SessionLocal()
-    funcionarios = db.query(Funcionarios).filter(Funcionarios.id == id).first()
-    return render_template("funcionario/atualizar.html", funcionario=funcionarios)
+    with Session() as db:
+        funcionario = db.get(Funcionarios, id)
+        if not funcionario:
+            flash("Funcionário não encontrado.")
+            return redirect(url_for("listar_funcionarios"))
+        return render_template("funcionario/atualizar.html", funcionario=funcionario)
 
+
+# ---------------------------------------------------------------
+# EDITAR (salvar)
+# ---------------------------------------------------------------
 @app.route("/funcionario/editar", methods=["POST"])
-#@login_required
+@cargo_required("administrador")
 def editar_funcionario_salvar():
-        db = SessionLocal()
-        id = request.form.get("id")
-        cpf = request.form.get("cpf")
-        nome = request.form.get("nome")
-        data = request.form.get("data")
-        sexo = request.form.get("sexo")
-        telefone = request.form.get("telefone")
-        email = request.form.get("email")
-        senha = request.form.get("senha")
-        endereco = request.form.get("endereco")
-        cidade = request.form.get("cidade")
-        cargo = request.form.get("cargo")
-        funcionarios = db.query(Funcionarios).filter(Funcionarios.id == id).first()
-        funcionarios.cpf = cpf
-        funcionarios.nome = nome
-        funcionarios.data = data
-        funcionarios.sexo = sexo
-        funcionarios.telefone = telefone
-        funcionarios.email = email
-        funcionarios.senha = senha
-        funcionarios.endereco = endereco
-        funcionarios.cidade = cidade
-        funcionarios.cargo = cargo
+    id = request.form.get("id", type=int)
+    email = request.form.get("email", "").strip()
+    cargo = normalizar_cargo(request.form.get("cargo"))
+    nova_senha = request.form.get("senha", "")
+
+    if cargo not in CARGOS_VALIDOS:
+        flash("Cargo inválido.")
+        return redirect(url_for("listar_funcionarios"))
+
+    with Session() as db:
+        funcionario = db.get(Funcionarios, id)
+        if not funcionario:
+            flash("Funcionário não encontrado.")
+            return redirect(url_for("listar_funcionarios"))
+
+        # Email já usado por OUTRO funcionário?
+        duplicado = (
+            db.query(Funcionarios)
+            .filter(Funcionarios.email == email, Funcionarios.id != id)
+            .first()
+        )
+        if duplicado:
+            flash("Esse email já pertence a outro funcionário.")
+            return redirect(url_for("listar_funcionarios"))
+
+        funcionario.cpf = request.form.get("cpf", "").strip()
+        funcionario.nome = request.form.get("nome", "").strip()
+        funcionario.data = request.form.get("data")
+        funcionario.sexo = request.form.get("sexo")
+        funcionario.telefone = request.form.get("telefone", "").strip()
+        funcionario.email = email
+        funcionario.endereco = request.form.get("endereco", "").strip()
+        funcionario.cidade = request.form.get("cidade", "").strip()
+        funcionario.cargo = cargo
+
+        # Só troca a senha se o campo foi preenchido
+        if nova_senha:
+            funcionario.senha = generate_password_hash(nova_senha)
 
         db.commit()
-        return render_template("funcionarios.html", funcionarios=db.query(Funcionarios).all())
 
+        # Mantém o nome/cargo da sessão atualizados se editou a si mesmo
+        if funcionario.id == session.get("user_id"):
+            session["user_name"] = funcionario.nome
+            session["cargo"] = cargo
 
+    return redirect(url_for("listar_funcionarios"))
