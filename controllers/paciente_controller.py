@@ -65,8 +65,8 @@ def deletar_paciente(item_id):
 #@login_required
 def editar_paciente(id):
     db = SessionLocal()
-    paciente = db.query(Paciente).filter(Paciente.id == id).first()
-    return render_template("paciente/atualizar.html", paciente=paciente)
+    pacientes = db.query(Paciente).filter(Paciente.id == id).first()
+    return render_template("atualizar_paciente.html", pacientes=pacientes)
 
 @app.route("/paciente/editar", methods=["POST"])
 #@login_required

@@ -32,7 +32,7 @@
         </span>
         Dashboard
       </a>
-      <a href="{{url_for('pacientes')}}" class="nav-item active">
+      <a href="{{url_for('inserir_paciente')}}" class="nav-item active">
         <span class="nav-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         </span>
@@ -185,7 +185,7 @@
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
             </div>
             <div class="stat-text">
-              <span class="stat-number">{{ total_pacientes }}</span>
+              <span class="stat-number">{{ pacientes|length }}</span>
               <span class="stat-label">Pacientes cadastrados</span>
             </div>
           </div>
@@ -200,7 +200,7 @@
                 <input type="text" placeholder="Buscar paciente...">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
               </div>
-              <a href="{{ url_for('pacientes') }}" class="btn-primary">
+              <a href="{{ url_for('inserir_paciente') }}" class="btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
                 Novo paciente
               </a>
@@ -214,75 +214,37 @@
                   <th>Nome</th>
                   <th>CPF</th>
                   <th>Telefone</th>
-                  <th>Última solicitação</th>
-                  <th>Status</th>
                   <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
-{% for paciente in pacientes_recentes %}
-<tr>
-  <td class="cell-name">
-    <span class="avatar-initials avatar-{{ (loop.index % 3) + 1 }}">
-      {{ paciente["nome"][:2].upper() }}
-    </span>
-    {{ paciente["nome"] }}
-  </td>
-  <td>{{ paciente["cpf"] }}</td>
-  <td>{{ paciente["telefone"] or "-" }}</td>
-  <td>
-    {% if paciente["ultima_solicitacao"] %}
-      {{ paciente["ultima_solicitacao"][8:10] }}/{{ paciente["ultima_solicitacao"][5:7] }}/{{ paciente["ultima_solicitacao"][:4] }}
-    {% else %}
-      -
-    {% endif %}
-  </td>
-  <td>
-    {% if paciente["status"] == "Aguardando coleta" %}
-      <span class="status status-warning">Aguardando coleta</span>
-    {% elif paciente["status"] == "Em andamento" %}
-      <span class="status status-info">Em andamento</span>
-    {% elif paciente["status"] == "Concluído" %}
-      <span class="status status-success">Concluído</span>
-    {% else %}
-      <span class="status">{{ paciente["status"] }}</span>
-    {% endif %}
-  </td>
-  <td class="cell-actions">
-    <button aria-label="Visualizar">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
-      </svg>
-    </button>
-    <button aria-label="Editar">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-        <path d="M11 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <button aria-label="Mais opções">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="5" r="1.6" fill="currentColor"/>
-        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
-        <circle cx="12" cy="19" r="1.6" fill="currentColor"/>
-      </svg>
-    </button>
-  </td>
-</tr>
-{% else %}
-<tr>
-  <td colspan="6" style="text-align: center; padding: 30px;">
-    Nenhum paciente cadastrado.
-  </td>
-</tr>
-{% endfor %}
-</tbody>
+        {% for p in pacientes %}
+        <tr>
+            <td>{{ p.nome }}</td>
+            <td>{{ p.cpf }}</td>
+            <td>{{ p.telefone }}</td>
+            <td>
+                <a href="{{ url_for('editar_paciente', id=p.id) }}" class="btn-editar">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                  Editar</a>
+            </td>
+            <td>
+                <a href="{{ url_for('deletar_paciente', item_id=p.id) }}" class="btn-excluir" class="btn-deletar" onclick="return confirm('Tem certeza em excluir o paciente?');">
+                  
+                  Excluir</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4">Nenhum paciente cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
             </table>
           </div>
 
           <div class="patients-footer">
-            <span>Mostrando {{ pacientes_recentes|length }} de {{ total_pacientes }} pacientes</span>
+            <span>Mostrando {{ paciente|length }} pacientes</span>
             <div class="pagination">
               <button class="page-btn" disabled>Anterior</button>
               <button class="page-btn active">1</button>
@@ -298,23 +260,4 @@
       </div>
 
       <!-- CALENDÁRIO -->
-      <aside class="calendar-card">
-        <div class="calendar-header">
-          <button aria-label="Mês anterior">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <span>Março <strong>2023</strong></span>
-          <button aria-label="Próximo mês">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
 
-        <table class="calendar-table">
-          <thead>
-            <tr>
-              <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td><td></td><td></td>

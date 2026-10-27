@@ -1,0 +1,151 @@
+<!-- Calendário mensal. Uso em qualquer template: {% include 'calendario.html' %} -->
+<div class="cal" id="cal">
+    <div class="cal-topo">
+        <button type="button" id="cal-ant" aria-label="Mês anterior">&lsaquo;</button>
+        <strong id="cal-titulo"></strong>
+        <button type="button" id="cal-prox" aria-label="Próximo mês">&rsaquo;</button>
+    </div>
+
+    <div class="cal-grade cal-semana">
+        <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span>
+        <span>Qui</span><span>Sex</span><span>Sáb</span>
+    </div>
+
+    <div class="cal-grade" id="cal-dias"></div>
+
+    <button type="button" id="cal-hoje" class="cal-btn-hoje">Ir para hoje</button>
+</div>
+
+<style>
+    .cal {
+        width: 100%;
+        max-width: 320px;
+        padding: 12px;
+        border: 1px solid rgba(128, 128, 128, 0.35);
+        border-radius: 10px;
+        font-family: inherit;
+        box-sizing: border-box;
+    }
+    .cal-topo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+    .cal-topo button {
+        border: none;
+        background: transparent;
+        color: inherit;
+        font-size: 1.4rem;
+        line-height: 1;
+        cursor: pointer;
+        padding: 2px 10px;
+        border-radius: 6px;
+    }
+    .cal-topo button:hover { background: rgba(128, 128, 128, 0.2); }
+    .cal-grade {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        text-align: center;
+    }
+    .cal-semana span {
+        font-size: 0.75rem;
+        opacity: 0.65;
+        padding: 4px 0;
+    }
+    .cal-dia {
+        padding: 8px 0;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+    .cal-dia:hover { background: rgba(128, 128, 128, 0.2); }
+    .cal-dia.vazio { cursor: default; }
+    .cal-dia.vazio:hover { background: transparent; }
+    .cal-dia.hoje { background: #2563eb; color: #fff; font-weight: 600; }
+    .cal-dia.selecionado { outline: 2px solid #2563eb; }
+    .cal-btn-hoje {
+        display: block;
+        margin: 10px auto 0;
+        border: 1px solid rgba(128, 128, 128, 0.35);
+        background: transparent;
+        color: inherit;
+        padding: 4px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.8rem;
+    }
+</style>
+
+<script>
+    (function () {
+        const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+                       "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+        const titulo = document.getElementById("cal-titulo");
+        const grade = document.getElementById("cal-dias");
+        let ref = new Date();
+        ref.setDate(1);
+
+        function iso(ano, mes, dia) {
+            return ano + "-" + String(mes + 1).padStart(2, "0") + "-" + String(dia).padStart(2, "0");
+        }
+
+        function desenhar() {
+            const ano = ref.getFullYear();
+            const mes = ref.getMonth();
+            const primeiroDiaSemana = new Date(ano, mes, 1).getDay();
+            const totalDias = new Date(ano, mes + 1, 0).getDate();
+            const hoje = new Date();
+
+            titulo.textContent = meses[mes] + " de " + ano;
+            grade.innerHTML = "";
+
+            // Espaços vazios antes do dia 1
+            for (let i = 0; i < primeiroDiaSemana; i++) {
+                const vazio = document.createElement("div");
+                vazio.className = "cal-dia vazio";
+                grade.appendChild(vazio);
+            }
+
+            for (let dia = 1; dia <= totalDias; dia++) {
+                const el = document.createElement("div");
+                el.className = "cal-dia";
+                el.textContent = dia;
+                el.dataset.data = iso(ano, mes, dia);
+
+                if (dia === hoje.getDate() && mes === hoje.getMonth() && ano === hoje.getFullYear()) {
+                    el.classList.add("hoje");
+                }
+
+                el.addEventListener("click", function () {
+                    grade.querySelectorAll(".selecionado").forEach(function (s) {
+                        s.classList.remove("selecionado");
+                    });
+                    el.classList.add("selecionado");
+                    // Avisa a página qual dia foi clicado (formato AAAA-MM-DD)
+                    document.dispatchEvent(new CustomEvent("calendario:dia", { detail: el.dataset.data }));
+                });
+
+                grade.appendChild(el);
+            }
+        }
+
+        document.getElementById("cal-ant").addEventListener("click", function () {
+            ref.setMonth(ref.getMonth() - 1);
+            desenhar();
+        });
+        document.getElementById("cal-prox").addEventListener("click", function () {
+            ref.setMonth(ref.getMonth() + 1);
+            desenhar();
+        });
+        document.getElementById("cal-hoje").addEventListener("click", function () {
+            ref = new Date();
+            ref.setDate(1);
+            desenhar();
+        });
+
+        desenhar();
+    })();
+</script>

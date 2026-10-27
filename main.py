@@ -108,7 +108,9 @@ def administracao():
 @app.route("/recepcao")
 @cargo_required("recepcionista", "administrador")
 def recepcao():
-    return render_template("dashboard_recepcao.html")
+    with Session() as db:
+        pacientes = db.query(Paciente).order_by(Paciente.nome).all()
+        return render_template("dashboard_recepcao.html", pacientes=pacientes)
 
 
 @app.route("/pacientes")
