@@ -1,8 +1,10 @@
-from app import app    
-from flask import request, render_template, redirect, session, url_for
-from main import *
+from flask import request, render_template, redirect, url_for, session, flash
+from sqlalchemy.orm import sessionmaker
+
+from app import app
+from auth import login_required
+from models.conexao import Session, engine
 from models.paciente_model import *
-#from auth import login_required
 
 # Criando a sessão para interagir com o banco de dados
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

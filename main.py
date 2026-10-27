@@ -45,26 +45,26 @@ def login():
         return redirect(url_for("dashboard"))
 
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("login.html")
 
     email = request.form.get("email", "").strip()
     senha = request.form.get("senha", "")
 
     if not email or not senha:
-        return render_template("index.html", error="Preencha email e senha.")
+        return render_template("login.html", error="Preencha email e senha.")
 
     with Session() as db:
         user = db.query(Funcionarios).filter(Funcionarios.email == email).first()
 
         # 1) usuário existe  2) senha confere com o hash
         if not user or not check_password_hash(user.senha, senha):
-            return render_template("index.html", error="Email ou senha incorretos.")
+            return render_template("login.html", error="Email ou senha incorretos.")
 
         # 3) cargo precisa ser um dos cargos conhecidos
         cargo = normalizar_cargo(user.cargo)
         if cargo not in DASHBOARD_POR_CARGO:
             return render_template(
-                "index.html",
+                "login.html",
                 error="Seu cargo não tem acesso ao sistema. Fale com o administrador."
             )
 

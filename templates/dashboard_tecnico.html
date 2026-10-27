@@ -59,7 +59,7 @@
         </span>
         Meu perfil
       </a>
-      <a href="{{ url_for('login')}}" class="nav-item">
+      <a href="{{ url_for('logout')}}" class="nav-item">
         <span class="nav-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
@@ -75,7 +75,20 @@
     <header class="topbar">
       <div class="topbar-title">
         <h1>TÉCNICO DE COLETA</h1>
-        <p>Bom dia, <strong>João</strong></p>
+        <p><span id="saudacao">Olá</span>, {{ session['user_name'].split()[0] }}</p>
+
+<script>
+    const hora = new Date().getHours();
+    let saudacao = "Boa noite";
+
+    if (hora >= 5 && hora < 12) {
+        saudacao = "Bom dia";
+    } else if (hora >= 12 && hora < 18) {
+        saudacao = "Boa tarde";
+    }
+
+    document.getElementById("saudacao").textContent = saudacao;
+</script>
       </div>
 
       <div class="topbar-search">

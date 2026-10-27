@@ -26,6 +26,12 @@
     <p class="sidebar-welcome">Seja bem-vindo à recepção!</p>
 
     <nav class="sidebar-nav">
+      <a href="#" class="nav-item active">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        </span>
+        Dashboard
+      </a>
       <a href="{{url_for('pacientes')}}" class="nav-item active">
         <span class="nav-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -59,7 +65,7 @@
 
       <div class="nav-divider"></div>
 
-      <a href="#" class="nav-item">
+      <!--<a href="#" class="nav-item">
         <span class="nav-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
         </span>
@@ -70,7 +76,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
         </span>
         Convênio particular
-      </a>
+      </a>-->
     </nav>
 
     <div class="sidebar-bottom">
@@ -96,7 +102,20 @@
     <header class="topbar">
       <div class="topbar-title">
         <h1>RECEPÇÃO</h1>
-        <p>Bom dia, <strong>{{ session["nome"] }}</strong></p>
+        <p><span id="saudacao">Olá</span>, {{ session['user_name'].split()[0] }}</p>
+
+<script>
+    const hora = new Date().getHours();
+    let saudacao = "Boa noite";
+
+    if (hora >= 5 && hora < 12) {
+        saudacao = "Bom dia";
+    } else if (hora >= 12 && hora < 18) {
+        saudacao = "Boa tarde";
+    }
+
+    document.getElementById("saudacao").textContent = saudacao;
+</script>
       </div>
 
       <div class="topbar-search">

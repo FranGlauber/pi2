@@ -26,14 +26,14 @@
         {# Substitui o src acima pelo caminho real do arquivo de logo de vocÃªs. #}
       </div>
     </div>
-    <p class="sidebar__greeting">Seja bem vinda Ã  recepÃ§Ã£o!</p>
+    <p class="sidebar__greeting">Seja bem vinda a recepção!</p>
     <nav class="sidebar__nav">
       <a href="{{ url_for('recepcao') }}" class="nav-item is-active">
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
         Dashboard
       </a>
       <a href="{{ url_for('solicitar_exames') }}" class="nav-item">
-        <svg viewBox="0 0 24 24"><path d="M8 19a4 4 0 004-4v-3M4 4v6a4 4 0 004 4h0M8 4v4M4 4h4M18 8a3 3 0 100-6 3 3 0 000 6z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.5 12.5 9 17l10.5-10.5" stroke="currentColor" stroke-width="0" /><path d="M8 3v3M16 3v3M4 8h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 14l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Solicitar exames
       </a>
       <a href="#" class="nav-item">
@@ -46,16 +46,16 @@
       </a>
       <a href="{{ url_for('situacao_exames')}}" class="nav-item">
         <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
-        SituaÃ§Ã£o dos exames
+        Situação dos exames
+      </a>
+      <!--<a href="#" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
+        Convênio púlico
       </a>
       <a href="#" class="nav-item">
         <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
-        ConvÃªnio pÃºblico
-      </a>
-      <a href="#" class="nav-item">
-        <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
-        ConvÃªnio particular
-      </a>
+        Convênio particular
+      </a>-->
     </nav>
     <div class="sidebar__footer">
       <a href="{{ url_for('perfil')}}" class="nav-item">
