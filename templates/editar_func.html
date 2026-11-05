@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Pacientes Â· ExamLife</title>
+  <link rel="stylesheet" href="/static/pacientes.css">
+  {# ATENÃ‡ÃƒO: se a sidebar/header de vocÃªs jÃ¡ estÃ¡ definida em recepcao.css,
+     troca o link acima (ou soma) para: url_for('static', filename='css/recepcao.css')
+     Sem ver o dashboard_recepcao.html eu nÃ£o tenho como copiar a marcaÃ§Ã£o exata
+     da sidebar, entÃ£o deixei uma sidebar prÃ³pria aqui embaixo (mesmos itens do
+     print) pra nÃ£o travar vocÃªs. Me manda o dashboard_recepcao.html que eu troco
+     por essa mesma estrutura/classes, pra ficar 100% igual sem duplicar CSS.
+     A tela ficou sÃ³ com o CADASTRO de paciente â€” a consulta/listagem
+     continua sendo feita na tabela que jÃ¡ existe na dashboard. #}
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar__scroll">
+    <div class="sidebar__top">
+      <button class="sidebar__toggle" aria-label="Recolher menu">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div class="sidebar__logo">
+        <img src="/static/logo.png" alt="ExamLife - Analises clínicas">
+        {# Substitui o src acima pelo caminho real do arquivo de logo de vocês. #}
+      </div>
+    </div>
+    <p class="sidebar__greeting">Seja bem vinda a recepção!</p>
+    <nav class="sidebar__nav">
+      <a href="{{ url_for('administracao') }}" class="nav-item is-active">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        Dashboard
+      </a>
+      <a href="{{ url_for('listar_funcionarios') }}" class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.5 12.5 9 17l10.5-10.5" stroke="currentColor" stroke-width="0" /><path d="M8 3v3M16 3v3M4 8h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 14l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Listar Funcionarios
+      </a>
+
+    </nav>
+
+  </div>
+</aside>
+
+  <!-- ===================== CADASTRO DE FUNCIONÁRIO ===================== -->
+  <section class="card" id="cadastro-funcionario">
+    <div class="card__header">
+      <h2>Editar funcionário</h2>
+      <p>Atualize os dados abaixo</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('editar_funcionario_salvar') }}" class="form-grid">
+    <input type="hidden" name="id" value="{{ funcionario.id }}">
+      <div class="form-field span-2">
+        <label for="nome">Nome completo</label>
+        <input type="text" id="nome" name="nome" placeholder="Ex: Maria Aparecida Silva" value="{{ funcionario.nome }}" required>
+      </div>
+
+      <div class="form-field">
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" value="{{ funcionario.cpf }}" disabled>
+      </div>
+
+      <div class="form-field">
+        <label for="nascimento">Data de nascimento</label>
+        <input type="text" id="data" name="data" placeholder="00/00/0000" value="{{ funcionario.data }}" required>
+      </div>
+
+      <div class="form-field">
+        <label for="sexo">Sexo</label>
+        <select id="sexo" name="sexo" required>
+          <option value="" disabled selected>Selecione</option>
+          <option value="feminino" {% if funcionario.sexo == "feminino" %}selected{% endif %}>Feminino</option>
+          <option value="masculino" {% if funcionario.sexo == "masculino" %}selected{% endif %}>Masculino</option>
+          <option value="outro" {% if funcionario.sexo == "outro" %}selected{% endif %}>Outro</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="telefone">Telefone</label>
+        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" value="{{ funcionario.telefone }}" required>
+      </div>
+
+      <div class="form-field span-2">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="nome@email.com" value="{{ funcionario.email }}">
+      </div>
+
+      <div class="form-field">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha">
+      </div>
+
+      <div class="form-field span-2">
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" name="endereco" placeholder="Rua, avenida..." value="{{ funcionario.endereco }}">
+      </div>
+      
+      <div class="form-field">
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" placeholder="Cidade" value="{{ funcionario.cidade }}">
+      </div>
+
+      <div class="form-field">
+        <label for="obs">Cargo</label>
+        <select id="cargo" name="cargo" required>
+          <option value="" disabled selected>Selecione</option>
+          <option value="administrador" {% if funcionario.cargo == "administrador" %}selected{% endif %}>Administrador</option>
+          <option value="analista" {% if funcionario.cargo == "analista" %}selected{% endif %}>Analista</option>
+          <option value="recepcionista" {% if funcionario.cargo == "recepcionista" %}selected{% endif %}>Recepcionista</option>
+          <option value="tecnico" {% if funcionario.cargo == "tecnico" %}selected{% endif %}>Técnico de laboratório</option>
+        </select>
+      </div>
+
+      <div class="form-actions span-4">
+        <button type="reset" class="btn btn--ghost">Cancelar</button>
+
+        <button type="submit" class="btn btn--primary">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          Atualizar funcionário
+        </button>
+      </div>
+
+    </form>
+  </section>
+
+</main>
+</div><!-- /.main -->
+</div><!-- /.layout -->
+</body>
+</html>
+

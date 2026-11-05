@@ -32,7 +32,7 @@
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
         Dashboard
       </a>
-      <a href="{{ url_for('lista_funcionarios') }}" class="nav-item">
+      <a href="{{ url_for('listar_funcionarios') }}" class="nav-item">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.5 12.5 9 17l10.5-10.5" stroke="currentColor" stroke-width="0" /><path d="M8 3v3M16 3v3M4 8h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 14l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Listar Funcionarios
       </a>
@@ -115,7 +115,7 @@
       <div class="form-actions span-4">
         <button type="reset" class="btn btn--ghost">Cancelar</button>
 
-        <button type="submit" class="btn btn--primary">
+        <button type="submit" class="btn btn--primary" onclick="return confirm('Funcionário cadastrado com sucesso!');">
           <svg viewBox="0 0 24 24">
             <path d="M12 5v14M5 12h14"/>
           </svg>

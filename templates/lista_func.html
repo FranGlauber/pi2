@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ExamLife | Recepção</title>
+<link rel="stylesheet" href="/static/recepcao.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <button class="menu-toggle" aria-label="Abrir/fechar menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="logo-block">
+        <!-- Substitua "logo.png" pelo arquivo do logotipo do laboratório -->
+        <img src="/static/logo.png" class="logo-img">
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="{{ url_for('administracao') }}" class="nav-item active">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
+        </span>
+        Dashboard
+      </a>
+
+      <div class="nav-divider"></div>
+
+      <!--<a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </span>
+        Convênio público
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </span>
+        Convênio particular
+      </a>-->
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a href="{{ url_for('perfil') }}" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        Meu perfil
+      </a>
+      <a href="{{ url_for('logout') }}" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Sair
+      </a>
+    </div>
+  </aside>
+
+  <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+  <div class="main">
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="topbar-title">
+        <h1>LISTA DE FUNCIONARIOS</h1>
+        <p><span id="saudacao">Olá</span>, {{ session['user_name'].split()[0] }}</p>
+
+<script>
+    const hora = new Date().getHours();
+    let saudacao = "Boa noite";
+
+    if (hora >= 5 && hora < 12) {
+        saudacao = "Bom dia";
+    } else if (hora >= 12 && hora < 18) {
+        saudacao = "Boa tarde";
+    }
+
+    document.getElementById("saudacao").textContent = saudacao;
+</script>
+      </div>
+
+      <div class="topbar-search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" placeholder="Faça sua pesquisa...">
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-btn" aria-label="Notificações">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="badge">2</span>
+        </button>
+        <button class="icon-btn" aria-label="Mensagens">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.4 8.5 8.5 0 0 1-4-1L3 20l1.1-5.5A8.4 8.4 0 1 1 21 11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="avatar-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="white" stroke-width="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- BANNER -->
+    <div class="banner">
+      <!-- Substitua "banner.png" pela imagem de banner desejada -->
+      <img src="/static/banner_recepcao.png" alt="Banner do laboratório">
+    </div>
+
+    <!-- STATS + CALENDAR ROW -->
+    <div class="content-row">
+
+      <div class="content-left">
+
+        <!-- CARDS DE ESTATÍSTICAS -->
+        <div class="stats-grid">
+          <div class="stat-card stat-card-wide">
+            <div class="stat-text">
+              <span class="stat-number">{{ funcionarios|length }}</span>
+              <span class="stat-label">Funcionários cadastrados</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABELA DE FUNCIONÁRIOS -->
+        <div class="patients-card">
+          <div class="patients-header">
+            <h2>Funcionários</h2>
+            <div class="patients-header-actions">
+              <div class="table-search">
+                <input type="text" placeholder="Buscar funcionário...">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <a href="{{ url_for('inserir_funcionario') }}" class="btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                Novo funcionário
+              </a>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="patients-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Cargo</th>
+                  <th>Telefone</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+        {% for f in funcionarios %}
+        <tr>
+            <td>{{ f.nome }}</td>
+            <td>{{ f.cargo }}</td>
+            <td>{{ f.telefone }}</td>
+            <td>
+                <a href="{{ url_for('editar_funcionario', id=f.id) }}" class="btn-editar">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                  Editar</a>
+            </td>
+            <td>
+                <a href="{{ url_for('deletar_funcionario', item_id=f.id) }}" class="btn-excluir" class="btn-deletar" onclick="return confirm('Tem certeza em excluir o funcionário?');">
+                  
+                  Excluir</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4">Nenhum funcionário cadastrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+            </table>
+          </div>
+
+          <div class="patients-footer">
+            <span>Mostrando {{ funcionarios|length }} funcionários</span>
+            <div class="pagination">
+              <button class="page-btn" disabled>Anterior</button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn">2</button>
+              <button class="page-btn">3</button>
+              <span class="page-dots">...</span>
+              <button class="page-btn">5</button>
+              <button class="page-btn">Próximo</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CALENDÁRIO -->
+

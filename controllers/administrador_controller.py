@@ -80,7 +80,7 @@ def criar_funcionario():
 def listar_funcionarios():
     with Session() as db:
         funcionarios = db.query(Funcionarios).all()
-        return render_template("funcionarios.html", funcionarios=funcionarios)
+        return render_template("lista_func.html", funcionarios=funcionarios)
 
 
 # ---------------------------------------------------------------
@@ -114,7 +114,7 @@ def editar_funcionario(id):
         if not funcionario:
             flash("Funcionário não encontrado.")
             return redirect(url_for("listar_funcionarios"))
-        return render_template("funcionario/atualizar.html", funcionario=funcionario)
+        return render_template("editar_func.html", funcionario=funcionario)
 
 
 # ---------------------------------------------------------------
