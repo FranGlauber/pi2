@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Pacientes Â· ExamLife</title>
   <link rel="stylesheet" href="/static/pacientes.css">
+  <script src="{{ url_for('static', filename='js/mascaras.js') }}" defer></script>
   {# ATENÃ‡ÃƒO: se a sidebar/header de vocÃªs jÃ¡ estÃ¡ definida em recepcao.css,
      troca o link acima (ou soma) para: url_for('static', filename='css/recepcao.css')
      Sem ver o dashboard_recepcao.html eu nÃ£o tenho como copiar a marcaÃ§Ã£o exata
@@ -86,27 +87,27 @@
 
       <div class="form-field">
         <label for="cpf">CPF</label>
-        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" value="{{ pacientes.cpf }}" required>
+        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" value="{{ pacientes.cpf }}" data-mask="cpf" required>
       </div>
 
       <div class="form-field">
         <label for="nascimento">Data de nascimento</label>
-        <input type="text" id="data" name="data" placeholder="00/00/0000" value="{{ pacientes.data }}" required>
+        <input type="text" id="data" name="data" placeholder="00/00/0000" value="{{ pacientes.data }}" data-mask="data" required>
       </div>
 
       <div class="form-field">
         <label for="sexo">Sexo</label>
-        <select id="sexo" name="sexo" value="{{ pacientes.sexo }}" required>
+        <select id="sexo" name="sexo" required>
           <option value="" disabled selected>Selecione</option>
-          <option value="feminino">Feminino</option>
-          <option value="masculino">Masculino</option>
-          <option value="outro">Outro</option>
+          <option value="feminino" {% if pacientes.sexo == "feminino" %}selected{% endif %}>Feminino</option>
+          <option value="masculino" {% if pacientes.sexo == "masculino" %}selected{% endif %}>Masculino</option>
+          <option value="outro" {% if pacientes.sexo == "outro" %}selected{% endif %}>Outro</option>
         </select>
       </div>
 
       <div class="form-field">
         <label for="telefone">Telefone</label>
-        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" value="{{ pacientes.telefone }}" required>
+        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" value="{{ pacientes.telefone }}" data-mask="telefone" required>
       </div>
 
       <div class="form-field span-2">
@@ -116,7 +117,7 @@
 
       <div class="form-field">
         <label for="cep">CEP</label>
-        <input type="text" id="cep" name="cep" placeholder="00000-000" value="{{ pacientes.cep }}">
+        <input type="text" id="cep" name="cep" placeholder="00000-000" value="{{ pacientes.cep }}" data-mask="cep">
       </div>
 
       <div class="form-field span-2">

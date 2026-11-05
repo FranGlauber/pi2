@@ -32,29 +32,29 @@
         </span>
         Dashboard
       </a>
-      <a href="#" class="nav-item">
-        <span class="nav-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </span>
-        Usuários
-      </a>
       <a href="{{ url_for('listar_funcionarios') }}" class="nav-item">
         <span class="nav-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 20a5.7 5.7 0 0 1 11 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 4.2a3.2 3.2 0 0 1 0 6M20.5 20a5 5 0 0 0-4-5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         </span>
-        Funcionários
+        Lista de Funcionários
       </a>
-      <a href="#" class="nav-item">
+      <a href="{{ url_for('recepcao') }}" class="nav-item">
         <span class="nav-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         </span>
-        Pacientes
+        Recepcionistas
       </a>
-      <a href="#" class="nav-item">
+      <a href="{{ url_for('analista') }}" class="nav-item">
+        <span class="nav-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        Analistas
+      </a>
+      <a href="{{ url_for('tecnico') }}" class="nav-item">
         <span class="nav-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 2v6.5L4.5 17a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L15 8.5V2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 2h6M7.5 14h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         </span>
-        Exames
+        Técnicos
       </a>
       <a href="#" class="nav-item">
         <span class="nav-icon">
@@ -62,16 +62,10 @@
         </span>
         Relatórios
       </a>
-      <!--<a href="#" class="nav-item">
-        <span class="nav-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 13.5a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.9 2.9l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.9-2.9l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1h-.2a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.9-2.9l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6v-.2a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.9 2.9l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1h.2a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.6 1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-        </span>
-        Configurações
-      </a>-->
     </nav>
 
     <div class="sidebar-bottom">
-      <a href="#" class="nav-item">
+      <a href="{{ url_for('perfil_administrador') }}" class="nav-item">
         <span class="nav-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         </span>

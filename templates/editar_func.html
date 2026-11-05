@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Pacientes Â· ExamLife</title>
   <link rel="stylesheet" href="/static/pacientes.css">
+  <script src="{{ url_for('static', filename='js/mascaras.js') }}" defer></script>
   {# ATENÃ‡ÃƒO: se a sidebar/header de vocÃªs jÃ¡ estÃ¡ definida em recepcao.css,
      troca o link acima (ou soma) para: url_for('static', filename='css/recepcao.css')
      Sem ver o dashboard_recepcao.html eu nÃ£o tenho como copiar a marcaÃ§Ã£o exata
@@ -58,12 +59,12 @@
 
       <div class="form-field">
         <label for="cpf">CPF</label>
-        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" value="{{ funcionario.cpf }}" disabled>
+        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" value="{{ funcionario.cpf }}" data-mask="cpf" disabled>
       </div>
 
       <div class="form-field">
         <label for="nascimento">Data de nascimento</label>
-        <input type="text" id="data" name="data" placeholder="00/00/0000" value="{{ funcionario.data }}" required>
+        <input type="text" id="data" name="data" placeholder="00/00/0000" value="{{ funcionario.data }}" data-mask="data" required>
       </div>
 
       <div class="form-field">
@@ -78,7 +79,7 @@
 
       <div class="form-field">
         <label for="telefone">Telefone</label>
-        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" value="{{ funcionario.telefone }}" required>
+        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" value="{{ funcionario.telefone }}" data-mask="telefone" required>
       </div>
 
       <div class="form-field span-2">
@@ -87,7 +88,7 @@
       </div>
 
       <div class="form-field">
-        <label for="senha">Senha</label>
+        <label for="senha">Atualizar Senha</label>
         <input type="password" id="senha" name="senha">
       </div>
 

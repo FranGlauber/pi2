@@ -1,4 +1,5 @@
-﻿from flask import Flask, render_template, request, redirect, url_for, session, flash
+﻿import re
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import check_password_hash
 
 # Segurança e autenticação
@@ -100,6 +101,11 @@ def logout():
 @cargo_required("administrador")
 def administracao():
     return render_template("dashboard_admin.html")
+
+@app.route("/perfil")
+@cargo_required("administrador")
+def perfil_administrador():
+    return render_template("perfil.html")
 
 
 # ---------------------------------------------------------------
