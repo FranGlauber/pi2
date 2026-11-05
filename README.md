@@ -4,3 +4,5 @@ O projeto consiste no desenvolvimento de um sistema web para gerenciamento das a
 Conta de Administrador Teste
 email: admin@teste.com 
 senha: admin123
+
+obs: executar arquivo de teste adm
