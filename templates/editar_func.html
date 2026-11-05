@@ -104,7 +104,7 @@
 
       <div class="form-field">
         <label for="obs">Cargo</label>
-        <select id="cargo" name="cargo" disabled>
+        <select id="cargo" name="cargo" required>
           <option value="" disabled selected>Selecione</option>
           <option value="administrador" {% if funcionario.cargo == "administrador" %}selected{% endif %}>Administrador</option>
           <option value="analista" {% if funcionario.cargo == "analista" %}selected{% endif %}>Analista</option>
