@@ -50,7 +50,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ============ SIDEBAR ============ */
 .sidebar {
-  width: 270px;
+  width: 290px;
   flex-shrink: 0;
   background: var(--white);
   border-right: 1px solid var(--border-color);
@@ -75,6 +75,8 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: -20px;
+  margin-left: 10px;
 }
 
 .logo-block { display: flex; align-items: center; }
@@ -84,6 +86,8 @@ button { font-family: inherit; cursor: pointer; }
   max-width: 200px;
   object-fit: contain;
   display: block;
+  margin-top: -25px;
+  margin-left: -10px;
 }
 
 .sidebar-welcome {
@@ -91,6 +95,8 @@ button { font-family: inherit; cursor: pointer; }
   font-style: italic;
   font-size: 15px;
   margin-bottom: 22px;
+  margin-top: -30px;
+  margin-left: 20px;
 }
 
 .sidebar-nav {
@@ -106,7 +112,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 12px 10px;
   border-radius: var(--radius-sm);
   color: var(--text-dark);
-  font-size: 15px;
+  font-size: 17px;
   transition: background 0.15s ease;
 }
 
@@ -165,7 +171,7 @@ button { font-family: inherit; cursor: pointer; }
   border-radius: 999px;
   padding: 12px 20px;
   color: var(--text-muted);
-  max-width: 560px;
+  max-width: 720px;
 }
 
 .topbar-search input {

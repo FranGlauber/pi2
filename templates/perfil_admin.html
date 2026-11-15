@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamLife — Meu perfil</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/static/perfil_admin.css">
+</head>
+<body>
+
+  <!-- ===== Ícones (sprite SVG) ===== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5" fill="currentColor" stroke="none"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5" fill="currentColor" stroke="none"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5" fill="currentColor" stroke="none"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14c2.6 0 4.5 1.9 4.5 5"/></symbol>
+      <symbol id="i-users-solid" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" fill="currentColor" stroke="none"/><path d="M4.5 20c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5z" fill="currentColor" stroke="none"/><circle cx="4.8" cy="10" r="2.6" fill="currentColor" stroke="none" opacity=".75"/><circle cx="19.2" cy="10" r="2.6" fill="currentColor" stroke="none" opacity=".75"/></symbol>
+      <symbol id="i-idcard" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="2.5"/><path d="M5 17c.5-2 2-3 4-3s3.500 1 4 3"/><path d="M15 9h3M15 13h3"/></symbol>
+      <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7.500 15h9"/></symbol>
+      <symbol id="i-tube" viewBox="0 0 24 24"><path d="M14.500 2v17.500c0 1.400-1.100 2.500-2.500 2.500s-2.500-1.100-2.500-2.500V2"/><path d="M8.500 2h7M14.500 16h-5"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V11M10 20V4M16 20v-8M22 20H2"/></symbol>
+      <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12.220 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.730l-.43.250a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.730.73l-.22.380a2 2 0 0 0 .73 2.730l.15.100a2 2 0 0 1 1 1.720v.510a2 2 0 0 1-1 1.740l-.15.090a2 2 0 0 0-.73 2.730l.22.380a2 2 0 0 0 2.730.730l.15-.08a2 2 0 0 1 2 0l.43.250a2 2 0 0 1 1 1.730V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.730l.43-.250a2 2 0 0 1 2 0l.15.080a2 2 0 0 0 2.730-.730l.22-.390a2 2 0 0 0-.73-2.730l-.15-.080a2 2 0 0 1-1-1.740v-.5a2 2 0 0 1 1-1.740l.15-.090a2 2 0 0 0 .73-2.730l-.22-.380a2 2 0 0 0-2.730-.730l-.15.080a2 2 0 0 1-2 0l-.43-.250a2 2 0 0 1-1-1.730V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-user-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M6.200 19c1-2.500 3.200-4 5.800-4s4.800 1.500 5.800 4"/></symbol>
+      <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></symbol>
+      <symbol id="i-plus-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.300-4.300"/></symbol>
+      <symbol id="i-filter" viewBox="0 0 24 24"><path d="M22 3H2l8 9.500V19l4 2v-8.500z"/></symbol>
+      <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+      <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 13v8M8 17l4 4 4-4"/><path d="M20 17.600A5 5 0 0 0 18 8h-1.300A8 8 0 1 0 4 16.300"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.500-7 10-7 10 7 10 7-3.500 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M17.940 17.940A10.070 10.070 0 0 1 12 20c-7 0-11-8-11-8a18.450 18.450 0 0 1 5.060-5.940M9.900 4.240A9.120 9.120 0 0 1 12 4c7 0 11 8 11 8a18.500 18.500 0 0 1-2.160 3.190m-6.720-1.070a3 3 0 1 1-4.240-4.240M1 1l22 22"/></symbol>
+      <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.800 2.800 0 0 1 4 4L7.500 20.500 2 22l1.500-5.500z"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.600-7 8-7s8 3 8 7"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11.500L12 4l9 7.500V21h-6v-6H9v6H3z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2.500"/><path d="M2.500 7.500L12 14l9.500-6.500"/></symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="3.800" fill="#fff" stroke="none"/></symbol>
+      <symbol id="i-person-solid" viewBox="0 0 24 24"><circle cx="12" cy="7.500" r="4.500" fill="currentColor" stroke="none"/><path d="M3.500 21c0-4.500 3.800-7.500 8.500-7.500s8.500 3 8.500 7.500z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.500" y="11" width="15" height="10" rx="2.500"/><path d="M8 11V7.500a4 4 0 0 1 8 0V11"/><circle cx="12" cy="16" r="1" fill="currentColor"/></symbol>
+      <symbol id="i-lock-solid" viewBox="0 0 24 24"><rect x="4" y="10.500" width="16" height="11" rx="2.500" fill="currentColor" stroke="none"/><path d="M8 10.500V7.500a4 4 0 0 1 8 0v3" stroke-width="2.500"/><circle cx="12" cy="16" r="1.500" fill="#fff" stroke="none"/></symbol>
+      <symbol id="i-shield-solid" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="currentColor" stroke="none"/><path d="M8.500 12l2.500 2.500 4.500-5" stroke="#fff" stroke-width="2.200"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6.500V12l3.500 2"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-width="2.500"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- Botão hambúrguer (recolhe/expande o menu) -->
+  <button type="button" class="btn-hamburguer" id="btnHamburguer" aria-label="Abrir/fechar menu">
+    <svg class="ico"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+
+  <div class="wrapper" id="wrapper">
+
+    <!-- ===================== MENU LATERAL (estático) ===================== -->
+    <aside class="sidebar">
+
+      <!-- ESPAÇO DA LOGO: coloque sua imagem aqui -->
+      <div class="logo-espaco">
+         <img src="{{ url_for('static', filename='logo.png') }}" alt="ExamLife — Análises clínicas"> 
+      </div>
+
+      <p class="boas-vindas">Seja bem-vindo à administração!</p>
+
+      <ul class="menu">
+        <li><a href="/administracao"><svg class="ico"><use href="#i-home"/></svg>Dashboard</a></li>
+        <li><a href="/cadastro_consulta_usuarios"><svg class="ico"><use href="#i-users"/></svg>Usuários</a></li>
+        <li><a href="/cadastro_consulta_funcionarios"><svg class="ico"><use href="#i-idcard"/></svg>Funcionários</a></li>
+        <li><a href="/cadastro_consulta_pacientes"><svg class="ico"><use href="#i-users-solid"/></svg>Pacientes</a></li>
+        <li><a href="/cadastro_exames"><svg class="ico"><use href="#i-flask"/></svg>Exames</a></li>
+        <li><a href="/relatorios"><svg class="ico"><use href="#i-chart"/></svg>Relatórios</a></li>
+        <li><a href="#"><svg class="ico"><use href="#i-gear"/></svg>Configurações</a></li>
+      </ul>
+
+      <div class="menu-divisor"></div>
+
+      <ul class="menu">
+        <li><a href="#" class="ativo"><svg class="ico"><use href="#i-user-circle"/></svg>Meu perfil</a></li>
+        <li><a href="/logout"><svg class="ico"><use href="#i-logout"/></svg>Sair</a></li>
+      </ul>
+    </aside>
+
+    <!-- ===================== CONTEÚDO PRINCIPAL (com scroll) ===================== -->
+    <main class="main">
+
+      <header class="titulo-pagina">
+        <h1>MEU PERFIL</h1>
+        <p>Gerencie suas informações e mantenha sua conta segura.</p>
+      </header>
+
+      <!-- Cartão do perfil -->
+      <section class="perfil-card">
+        <svg class="folhas" viewBox="0 0 300 300" fill="none" aria-hidden="true">
+          <path d="M-40 300C60 230 170 215 330 245V300z" fill="#e3efe8" opacity=".8"/>
+          <path d="M170 300C170 210 190 120 250 20" stroke="#a9cfb9" stroke-width="2"/>
+          <path d="M178 250c-30-14-48-40-50-70 34 4 52 36 50 70z" fill="#d3e8dc"/>
+          <path d="M186 205c-26-18-36-44-30-74 30 12 40 44 30 74z" fill="#cfe5da"/>
+          <path d="M200 160c-22-20-28-46-20-72 26 14 32 44 20 72z" fill="#d8eadf"/>
+          <path d="M206 200c26-24 56-28 80-18-18 28-52 36-80 18z" fill="#d3e7dc"/>
+          <path d="M216 150c24-22 50-26 72-14-16 26-46 34-72 14z" fill="#dcece3"/>
+          <path d="M228 100c20-18 42-22 62-12-14 22-40 28-62 12z" fill="#d6eadf"/>
+        </svg>
+
+        <div class="avatar-area">
+          <div class="avatar-grande" id="avatarGrande">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <defs><clipPath id="clipAv"><circle cx="100" cy="100" r="100"/></clipPath></defs>
+              <g clip-path="url(#clipAv)">
+                <circle cx="100" cy="100" r="100" fill="#c4e6d3"/>
+                <path d="M15 205C20 165 52 146 80 140h40c28 6 60 25 65 65z" fill="#14603f"/>
+                <rect x="89" y="116" width="22" height="30" rx="8" fill="#efc2a6"/>
+                <path d="M80 140l20 30 20-30-8-6h-24z" fill="#fff"/>
+                <path d="M96 150h8l5 30-9 11-9-11z" fill="#0f3d2a"/>
+                <ellipse cx="71" cy="94" rx="5" ry="9" fill="#eeb99c"/>
+                <ellipse cx="129" cy="94" rx="5" ry="9" fill="#eeb99c"/>
+                <ellipse cx="100" cy="92" rx="29" ry="36" fill="#f6cdb5"/>
+                <path d="M68 90C62 54 84 44 102 46c24 0 38 18 30 46-4-14-14-22-32-22-17 0-27 8-32 20z" fill="#1b2a36"/>
+              </g>
+            </svg>
+          </div>
+          <button type="button" class="btn-camera" id="btnCamera" aria-label="Alterar foto"><svg class="ico"><use href="#i-camera"/></svg></button>
+          <input type="file" id="inputFoto" accept="image/*" hidden>
+        </div>
+
+        <div class="perfil-info">
+          <h2 id="cabNome">Carlos Ferreira</h2>
+          <p class="linha-info cargo"><svg class="ico"><use href="#i-shield"/></svg>Administrador</p>
+          <p class="linha-info"><svg class="ico"><use href="#i-mail"/></svg><span id="cabEmail">carlos.ferreira@examlife.com.br</span></p>
+          <span class="status ativo"><span>Ativo</span></span>
+        </div>
+      </section>
+
+      <!-- Informações pessoais + Dados de acesso -->
+      <form id="formPerfil" class="duas-colunas" novalidate>
+
+        <section class="card">
+          <h3 class="card-titulo"><svg class="ico"><use href="#i-person-solid"/></svg>Informações pessoais</h3>
+          <div class="grade-campos">
+            <div class="campo-perfil editavel">
+              <label for="pNome">Nome completo</label>
+              <input type="text" id="pNome" value="Carlos Ferreira" readonly>
+            </div>
+            <div class="campo-perfil editavel">
+              <label for="pTelefone">Telefone</label>
+              <input type="text" id="pTelefone" value="(11) 98765-4321" maxlength="15" inputmode="tel" readonly>
+            </div>
+            <div class="campo-perfil editavel">
+              <label for="pEmail">E-mail</label>
+              <input type="email" id="pEmail" value="carlos.ferreira@examlife.com.br" readonly>
+            </div>
+            <div class="campo-perfil">
+              <label for="pCpf">CPF</label>
+              <input type="text" id="pCpf" value="***.123.456-**" readonly>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3 class="card-titulo"><svg class="ico"><use href="#i-lock-solid"/></svg>Dados de acesso</h3>
+          <div class="campo-perfil editavel">
+            <label for="pUsuario">Nome de usuário</label>
+            <input type="text" id="pUsuario" value="carlos.ferreira" readonly>
+          </div>
+          <div class="campo-perfil">
+            <label for="pPerfil">Perfil de acesso</label>
+            <input type="text" id="pPerfil" value="Administrador" readonly>
+          </div>
+          <button type="button" class="btn-primario largo" id="btnSenha">
+            <svg class="ico"><use href="#i-lock"/></svg>Alterar senha
+          </button>
+        </section>
+      </form>
+
+      <!-- Segurança da conta -->
+      <section class="card seguranca">
+        <h3 class="card-titulo"><svg class="ico"><use href="#i-shield-solid"/></svg>Segurança da conta</h3>
+        <div class="seguranca-itens">
+          <div class="seg-item">
+            <svg class="ico"><use href="#i-clock"/></svg>
+            <div><b>Último acesso</b><span>21/05/2025 às 14:32</span></div>
+          </div>
+          <div class="seg-divisor"></div>
+          <div class="seg-item">
+            <svg class="ico"><use href="#i-shield"/></svg>
+            <div><b>Autenticação</b><span>Acesso padrão do sistema</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ações -->
+      <div class="acoes-rodape">
+        <button type="button" class="btn-contorno" id="btnEditar">
+          <svg class="ico"><use href="#i-pencil"/></svg><span>Editar perfil</span>
+        </button>
+        <button type="button" class="btn-primario" id="btnSalvar" disabled>
+          <svg class="ico"><use href="#i-check"/></svg>Salvar alterações
+        </button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===================== POPUP: ALTERAR SENHA ===================== -->
+  <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+
+      <div class="modal-topo">
+        <div class="modal-titulo">
+          <div class="icone"><svg class="ico"><use href="#i-lock"/></svg></div>
+          <div>
+            <h2 id="modalTitulo">Alterar senha</h2>
+            <p>Crie uma nova senha para sua conta.</p>
+          </div>
+        </div>
+        <button type="button" class="modal-fechar" id="btnFecharModal" aria-label="Fechar">
+          <svg class="ico"><use href="#i-x"/></svg>
+        </button>
+      </div>
+
+      <form id="formSenha" novalidate>
+        <div class="campo">
+          <label for="senhaAtual">Senha atual</label>
+          <input type="password" id="senhaAtual" autocomplete="current-password">
+          <span class="msg-erro">Informe sua senha atual.</span>
+        </div>
+
+        <div class="campo">
+          <label for="senhaNova">Nova senha</label>
+          <div class="campo-senha">
+            <input type="password" id="senhaNova" placeholder="Mínimo de 6 caracteres" autocomplete="new-password">
+            <button type="button" class="btn-olho" id="btnOlho" aria-label="Mostrar senha"><svg class="ico"><use href="#i-eye"/></svg></button>
+          </div>
+          <span class="msg-erro">A senha deve ter no mínimo 6 caracteres.</span>
+        </div>
+
+        <div class="campo">
+          <label for="senhaConf">Confirmar nova senha</label>
+          <input type="password" id="senhaConf" autocomplete="new-password">
+          <span class="msg-erro">As senhas não coincidem.</span>
+        </div>
+
+        <div class="modal-acoes">
+          <button type="button" class="btn-cancelar" id="btnCancelar">Cancelar</button>
+          <button type="submit" class="btn-primario">Salvar nova senha</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /* ---------- Menu hambúrguer ---------- */
+    document.getElementById('btnHamburguer').addEventListener('click', () =>
+      document.getElementById('wrapper').classList.toggle('recolhido'));
+
+    /* ---------- Aviso rápido ---------- */
+    const toast = document.getElementById('toast');
+    let tt;
+    function aviso(msg, erro) {
+      toast.textContent = msg;
+      toast.classList.toggle('erro', !!erro);
+      toast.classList.add('visivel');
+      clearTimeout(tt);
+      tt = setTimeout(() => toast.classList.remove('visivel'), 2800);
+    }
+
+    /* ---------- Foto de perfil ---------- */
+    const inputFoto = document.getElementById('inputFoto');
+    document.getElementById('btnCamera').addEventListener('click', () => inputFoto.click());
+    inputFoto.addEventListener('change', () => {
+      const f = inputFoto.files[0];
+      if (!f) return;
+      if (!f.type.startsWith('image/') || f.size > 3 * 1024 * 1024) {
+        aviso('Escolha uma imagem de até 3 MB.', true);
+        return;
+      }
+      const r = new FileReader();
+      r.onload = () => {
+        document.getElementById('avatarGrande').innerHTML = `<img src="${r.result}" alt="Foto de perfil">`;
+        /* TODO (Flask): enviar a foto para o servidor (FormData) */
+        aviso('Foto atualizada!');
+      };
+      r.readAsDataURL(f);
+    });
+
+    /* ---------- Editar / salvar perfil ---------- */
+    const form = document.getElementById('formPerfil');
+    const btnEditar = document.getElementById('btnEditar');
+    const btnSalvar = document.getElementById('btnSalvar');
+    const editaveis = [...form.querySelectorAll('.campo-perfil.editavel input')];
+    let original = {};
+    let editando = false;
+
+    function entrarEdicao() {
+      editando = true;
+      original = Object.fromEntries(editaveis.map(i => [i.id, i.value]));
+      editaveis.forEach(i => i.readOnly = false);
+      form.classList.add('editando');
+      btnSalvar.disabled = false;
+      btnEditar.querySelector('span').textContent = 'Cancelar edição';
+      editaveis[0].focus();
+    }
+    function sairEdicao(restaurar) {
+      editando = false;
+      if (restaurar) editaveis.forEach(i => i.value = original[i.id]);
+      editaveis.forEach(i => { i.readOnly = true; i.closest('.campo-perfil').classList.remove('erro'); });
+      form.classList.remove('editando');
+      btnSalvar.disabled = true;
+      btnEditar.querySelector('span').textContent = 'Editar perfil';
+    }
+
+    btnEditar.addEventListener('click', () => editando ? sairEdicao(true) : entrarEdicao());
+
+    document.getElementById('pTelefone').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+      v = v.replace(/^(\d{2})(\d)/, '($1) $2');
+      v = v.length > 10 ? v.replace(/(\d{5})(\d{1,4})$/, '$1-$2') : v.replace(/(\d{4})(\d{1,4})$/, '$1-$2');
+      e.target.value = v;
+    });
+
+    function marcarPerfil(id, ok) {
+      document.getElementById(id).closest('.campo-perfil').classList.toggle('erro', !ok);
+      return ok;
+    }
+
+    btnSalvar.addEventListener('click', () => {
+      const nome = document.getElementById('pNome').value.trim();
+      const tel = document.getElementById('pTelefone').value;
+      const email = document.getElementById('pEmail').value.trim();
+      const usuario = document.getElementById('pUsuario').value.trim();
+
+      const ok = [
+        marcarPerfil('pNome', nome.split(/\s+/).filter(Boolean).length >= 2),
+        marcarPerfil('pTelefone', tel.replace(/\D/g, '').length >= 10),
+        marcarPerfil('pEmail', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)),
+        marcarPerfil('pUsuario', /^[^\s@]{3,}$/.test(usuario))
+      ].every(Boolean);
+
+      if (!ok) { aviso('Revise os campos destacados.', true); return; }
+
+      /* TODO (Flask): enviar para a rota de atualização, ex.:
+         fetch('/perfil/atualizar', { method: 'POST', body: JSON.stringify({ nome, tel, email, usuario }) }) */
+
+      document.getElementById('cabNome').textContent = nome;
+      document.getElementById('cabEmail').textContent = email;
+      sairEdicao(false);
+      aviso('Alterações salvas com sucesso!');
+    });
+
+    /* ---------- Popup: alterar senha ---------- */
+    const overlay = document.getElementById('modalOverlay');
+    const formSenha = document.getElementById('formSenha');
+    const senhaNova = document.getElementById('senhaNova');
+    const btnOlho = document.getElementById('btnOlho');
+
+    function abrirModal() {
+      overlay.classList.add('aberto');
+      overlay.setAttribute('aria-hidden', 'false');
+      setTimeout(() => document.getElementById('senhaAtual').focus(), 250);
+    }
+    function fecharModal() {
+      overlay.classList.remove('aberto');
+      overlay.setAttribute('aria-hidden', 'true');
+      formSenha.reset();
+      formSenha.querySelectorAll('.campo').forEach(c => c.classList.remove('erro'));
+      senhaNova.type = 'password';
+      btnOlho.innerHTML = '<svg class="ico"><use href="#i-eye"/></svg>';
+    }
+    document.getElementById('btnSenha').addEventListener('click', abrirModal);
+    document.getElementById('btnFecharModal').addEventListener('click', fecharModal);
+    document.getElementById('btnCancelar').addEventListener('click', fecharModal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) fecharModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+
+    btnOlho.addEventListener('click', () => {
+      const mostrar = senhaNova.type === 'password';
+      senhaNova.type = mostrar ? 'text' : 'password';
+      btnOlho.innerHTML = `<svg class="ico"><use href="#${mostrar ? 'i-eye-off' : 'i-eye'}"/></svg>`;
+    });
+
+    function marcar(id, ok) {
+      document.getElementById(id).closest('.campo').classList.toggle('erro', !ok);
+      return ok;
+    }
+
+    formSenha.addEventListener('submit', e => {
+      e.preventDefault();
+      const atual = document.getElementById('senhaAtual').value;
+      const nova = senhaNova.value;
+      const conf = document.getElementById('senhaConf').value;
+
+      const ok = [
+        marcar('senhaAtual', atual.length > 0),
+        marcar('senhaNova', nova.length >= 6),
+        marcar('senhaConf', conf === nova && conf.length > 0)
+      ].every(Boolean);
+      if (!ok) return;
+
+      /* TODO (Flask): enviar para a rota de troca de senha, ex.:
+         fetch('/perfil/alterar-senha', { method: 'POST', body: JSON.stringify({ atual, nova }) }) */
+
+      fecharModal();
+      aviso('Senha alterada com sucesso!');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamLife — Pacientes</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/static/cadastro_consulta_pacientes.css">
+</head>
+<body>
+
+  <!-- ===== Ícones (sprite SVG) ===== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5" fill="currentColor" stroke="none"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5" fill="currentColor" stroke="none"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5" fill="currentColor" stroke="none"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14c2.6 0 4.5 1.9 4.5 5"/></symbol>
+      <symbol id="i-users-solid" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" fill="currentColor" stroke="none"/><path d="M4.5 20c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5z" fill="currentColor" stroke="none"/><circle cx="4.8" cy="10" r="2.6" fill="currentColor" stroke="none" opacity=".75"/><circle cx="19.2" cy="10" r="2.6" fill="currentColor" stroke="none" opacity=".75"/></symbol>
+      <symbol id="i-idcard" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="2.5"/><path d="M5 17c.5-2 2-3 4-3s3.500 1 4 3"/><path d="M15 9h3M15 13h3"/></symbol>
+      <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7.500 15h9"/></symbol>
+      <symbol id="i-tube" viewBox="0 0 24 24"><path d="M14.500 2v17.500c0 1.400-1.100 2.500-2.500 2.500s-2.500-1.100-2.500-2.500V2"/><path d="M8.500 2h7M14.500 16h-5"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V11M10 20V4M16 20v-8M22 20H2"/></symbol>
+      <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12.220 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.730l-.43.250a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.730.73l-.22.380a2 2 0 0 0 .73 2.730l.15.100a2 2 0 0 1 1 1.720v.510a2 2 0 0 1-1 1.740l-.15.090a2 2 0 0 0-.73 2.730l.22.380a2 2 0 0 0 2.730.730l.15-.08a2 2 0 0 1 2 0l.43.250a2 2 0 0 1 1 1.730V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.730l.43-.250a2 2 0 0 1 2 0l.15.080a2 2 0 0 0 2.730-.730l.22-.390a2 2 0 0 0-.73-2.730l-.15-.080a2 2 0 0 1-1-1.740v-.5a2 2 0 0 1 1-1.740l.15-.090a2 2 0 0 0 .73-2.730l-.22-.380a2 2 0 0 0-2.730-.730l-.15.080a2 2 0 0 1-2 0l-.43-.250a2 2 0 0 1-1-1.730V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-user-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M6.200 19c1-2.500 3.200-4 5.800-4s4.800 1.500 5.800 4"/></symbol>
+      <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></symbol>
+      <symbol id="i-plus-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.300-4.300"/></symbol>
+      <symbol id="i-filter" viewBox="0 0 24 24"><path d="M22 3H2l8 9.500V19l4 2v-8.500z"/></symbol>
+      <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+      <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 13v8M8 17l4 4 4-4"/><path d="M20 17.600A5 5 0 0 0 18 8h-1.300A8 8 0 1 0 4 16.300"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.500-7 10-7 10 7 10 7-3.500 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M17.940 17.940A10.070 10.070 0 0 1 12 20c-7 0-11-8-11-8a18.450 18.450 0 0 1 5.060-5.940M9.900 4.240A9.120 9.120 0 0 1 12 4c7 0 11 8 11 8a18.500 18.500 0 0 1-2.160 3.190m-6.720-1.070a3 3 0 1 1-4.240-4.240M1 1l22 22"/></symbol>
+      <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.800 2.800 0 0 1 4 4L7.500 20.500 2 22l1.500-5.500z"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.600-7 8-7s8 3 8 7"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- Botão hambúrguer (recolhe/expande o menu) -->
+  <button type="button" class="btn-hamburguer" id="btnHamburguer" aria-label="Abrir/fechar menu">
+    <svg class="ico"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+
+  <div class="wrapper" id="wrapper">
+
+    <!-- ===================== MENU LATERAL (estático) ===================== -->
+    <aside class="sidebar">
+
+      <!-- ESPAÇO DA LOGO: coloque sua imagem aqui -->
+      <div class="logo-espaco">
+         <img src="{{ url_for('static', filename='logo.png') }}" alt="ExamLife — Análises clínicas"> 
+      </div>
+
+      <p class="boas-vindas">Seja bem-vindo à administração!</p>
+
+      <ul class="menu">
+        <li><a href="/administracao"><svg class="ico"><use href="#i-dashboard"/></svg>Dashboard</a></li>
+        <li><a href="/cadastro_consulta_usuarios"><svg class="ico"><use href="#i-users"/></svg>Usuários</a></li>
+        <li><a href="/cadastro_consulta_funcionarios"><svg class="ico"><use href="#i-idcard"/></svg>Funcionários</a></li>
+        <li><a href="#" class="ativo"><svg class="ico"><use href="#i-users-solid"/></svg>Pacientes</a></li>
+        <li><a href="/cadastro_exames"><svg class="ico"><use href="#i-flask"/></svg>Exames</a></li>
+        <li><a href="/relatorios"><svg class="ico"><use href="#i-chart"/></svg>Relatórios</a></li>
+        <li><a href="#"><svg class="ico"><use href="#i-gear"/></svg>Configurações</a></li>
+      </ul>
+
+      <div class="menu-divisor"></div>
+
+      <ul class="menu">
+        <li><a href="/perfil_admin"><svg class="ico"><use href="#i-user-circle"/></svg>Meu perfil</a></li>
+        <li><a href="/logout"><svg class="ico"><use href="#i-logout"/></svg>Sair</a></li>
+      </ul>
+    </aside>
+
+    <!-- ===================== CONTEÚDO PRINCIPAL (com scroll) ===================== -->
+    <main class="main">
+
+      <!-- Cabeçalho da página -->
+      <section class="page-header">
+        <svg class="folhas" viewBox="0 0 200 160" fill="none" stroke="#9fc9b4" stroke-width="1.500" aria-hidden="true">
+          <path d="M100 160C100 110 110 60 150 10"/>
+          <path d="M104 120c-20-8-34-24-36-44 22 2 36 20 36 44z" fill="#cfe5da"/>
+          <path d="M112 80c-18-10-26-28-24-48 20 6 30 26 24 48z" fill="#d8eadf"/>
+          <path d="M124 100c18-12 36-12 52-4-12 16-32 20-52 4z" fill="#d3e7dc"/>
+          <path d="M134 56c14-14 30-18 46-14-8 18-26 24-46 14z" fill="#dcece3"/>
+        </svg>
+
+        <div class="page-header-info">
+          <div class="page-icone"><svg class="ico"><use href="#i-users-solid"/></svg></div>
+          <div>
+            <h1>Pacientes</h1>
+            <p>Cadastre, consulte e gerencie os pacientes do laboratório.</p>
+          </div>
+        </div>
+
+        <button type="button" class="btn-primario" id="btnNovo">
+          <svg class="ico"><use href="#i-plus-circle"/></svg>
+          Cadastrar novo paciente
+        </button>
+      </section>
+
+      <!-- Filtros -->
+      <section class="filtros">
+        <div class="busca">
+          <svg class="ico"><use href="#i-search"/></svg>
+          <input type="text" id="filtroBusca" placeholder="Buscar por nome, CPF ou e-mail...">
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtroSexo">Sexo</label>
+          <div class="select-wrap">
+            <select id="filtroSexo">
+              <option value="">Todos</option>
+              <option value="F">Feminino</option>
+              <option value="M">Masculino</option>
+              <option value="O">Outro</option>
+            </select>
+            <svg class="ico"><use href="#i-chevron-down"/></svg>
+          </div>
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtroFaixa">Faixa etária</label>
+          <div class="select-wrap">
+            <select id="filtroFaixa">
+              <option value="">Todas</option>
+              <option value="menor">Até 17 anos</option>
+              <option value="adulto">18 a 59 anos</option>
+              <option value="idoso">60 anos ou mais</option>
+            </select>
+            <svg class="ico"><use href="#i-chevron-down"/></svg>
+          </div>
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtroCidade">Cidade/UF</label>
+          <div class="select-wrap">
+            <select id="filtroCidade"><option value="">Todas</option><option value="Guarulhos/SP">Guarulhos/SP</option><option value="Osasco/SP">Osasco/SP</option><option value="Santo André/SP">Santo André/SP</option><option value="São Paulo/SP">São Paulo/SP</option></select>
+            <svg class="ico"><use href="#i-chevron-down"/></svg>
+          </div>
+        </div>
+
+        <button type="button" class="btn-filtrar" id="btnFiltrar">
+          <svg class="ico"><use href="#i-filter"/></svg>
+          Filtrar
+        </button>
+      </section>
+
+      <!-- Lista de pacientes -->
+      <section class="lista">
+        <div class="lista-topo">
+          <h2><svg class="ico"><use href="#i-users-solid" style="fill:currentColor;stroke:none"/></svg>Lista de Pacientes</h2>
+          <button type="button" class="btn-exportar">
+            <svg class="ico"><use href="#i-download"/></svg>
+            Exportar relatório
+          </button>
+        </div>
+
+        <div class="tabela-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Nascimento</th>
+                <th>Sexo</th>
+                <th>Telefone</th>
+                <th>E-mail</th>
+                <th>Cidade/UF</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tabela">
+
+              <tr data-sexo="F" data-cidade="São Paulo/SP" data-nasc="1990-03-14">
+                <td><div class="usuario"><span class="avatar">BA</span>Beatriz Almeida Rocha</div></td>
+                <td>123.456.789-01</td>
+                <td>14/03/1990</td>
+                <td><span class="badge recepcao"><svg class="ico"><use href="#i-user"/></svg>Feminino</span></td>
+                <td>(11) 98123-4567</td>
+                <td>beatriz.rocha@email.com</td>
+                <td>São Paulo/SP</td>
+                <td><div class="acoes">
+                  <button class="btn-acao" title="Visualizar"><svg class="ico"><use href="#i-eye"/></svg></button>
+                  <button class="btn-acao" title="Editar"><svg class="ico"><use href="#i-pencil"/></svg></button>
+                  <button class="btn-acao excluir" title="Excluir"><svg class="ico"><use href="#i-trash"/></svg></button>
+                </div></td>
+              </tr>
+
+              <tr data-sexo="M" data-cidade="Guarulhos/SP" data-nasc="1985-07-22">
+                <td><div class="usuario"><span class="avatar">LF</span>Lucas Ferreira Gomes</div></td>
+                <td>234.567.890-12</td>
+                <td>22/07/1985</td>
+                <td><span class="badge tecnico"><svg class="ico"><use href="#i-user"/></svg>Masculino</span></td>
+                <td>(11) 97234-5678</td>
+                <td>lucas.gomes@email.com</td>
+                <td>Guarulhos/SP</td>
+                <td><div class="acoes">
+                  <button class="btn-acao" title="Visualizar"><svg class="ico"><use href="#i-eye"/></svg></button>
+                  <button class="btn-acao" title="Editar"><svg class="ico"><use href="#i-pencil"/></svg></button>
+                  <button class="btn-acao excluir" title="Excluir"><svg class="ico"><use href="#i-trash"/></svg></button>
+                </div></td>
+              </tr>
+
+              <tr data-sexo="F" data-cidade="São Paulo/SP" data-nasc="1958-11-05">
+                <td><div class="usuario"><span class="avatar">HM</span>Helena Martins Souza</div></td>
+                <td>345.678.901-23</td>
+                <td>05/11/1958</td>
+                <td><span class="badge recepcao"><svg class="ico"><use href="#i-user"/></svg>Feminino</span></td>
+                <td>(11) 96345-6789</td>
+                <td>helena.souza@email.com</td>
+                <td>São Paulo/SP</td>
+                <td><div class="acoes">
+                  <button class="btn-acao" title="Visualizar"><svg class="ico"><use href="#i-eye"/></svg></button>
+                  <button class="btn-acao" title="Editar"><svg class="ico"><use href="#i-pencil"/></svg></button>
+                  <button class="btn-acao excluir" title="Excluir"><svg class="ico"><use href="#i-trash"/></svg></button>
+                </div></td>
+              </tr>
+
+              <tr data-sexo="M" data-cidade="Osasco/SP" data-nasc="2015-02-18">
+                <td><div class="usuario"><span class="avatar">PH</span>Pedro Henrique Lima</div></td>
+                <td>456.789.012-34</td>
+                <td>18/02/2015</td>
+                <td><span class="badge tecnico"><svg class="ico"><use href="#i-user"/></svg>Masculino</span></td>
+                <td>(11) 95456-7890</td>
+                <td>pedro.lima@email.com</td>
+                <td>Osasco/SP</td>
+                <td><div class="acoes">
+                  <button class="btn-acao" title="Visualizar"><svg class="ico"><use href="#i-eye"/></svg></button>
+                  <button class="btn-acao" title="Editar"><svg class="ico"><use href="#i-pencil"/></svg></button>
+                  <button class="btn-acao excluir" title="Excluir"><svg class="ico"><use href="#i-trash"/></svg></button>
+                </div></td>
+              </tr>
+
+              <tr data-sexo="F" data-cidade="Santo André/SP" data-nasc="1998-09-30">
+                <td><div class="usuario"><span class="avatar">CR</span>Camila Ribeiro Costa</div></td>
+                <td>567.890.123-45</td>
+                <td>30/09/1998</td>
+                <td><span class="badge recepcao"><svg class="ico"><use href="#i-user"/></svg>Feminino</span></td>
+                <td>(11) 94567-8901</td>
+                <td>camila.costa@email.com</td>
+                <td>Santo André/SP</td>
+                <td><div class="acoes">
+                  <button class="btn-acao" title="Visualizar"><svg class="ico"><use href="#i-eye"/></svg></button>
+                  <button class="btn-acao" title="Editar"><svg class="ico"><use href="#i-pencil"/></svg></button>
+                  <button class="btn-acao excluir" title="Excluir"><svg class="ico"><use href="#i-trash"/></svg></button>
+                </div></td>
+              </tr>
+
+              <tr data-sexo="M" data-cidade="São Paulo/SP" data-nasc="1949-12-12">
+                <td><div class="usuario"><span class="avatar">RN</span>Roberto Carlos Nunes</div></td>
+                <td>678.901.234-56</td>
+                <td>12/12/1949</td>
+                <td><span class="badge tecnico"><svg class="ico"><use href="#i-user"/></svg>Masculino</span></td>
+                <td>(11) 93678-9012</td>
+                <td>roberto.nunes@email.com</td>
+                <td>São Paulo/SP</td>
+                <td><div class="acoes">
+                  <button class="btn-acao" title="Visualizar"><svg class="ico"><use href="#i-eye"/></svg></button>
+                  <button class="btn-acao" title="Editar"><svg class="ico"><use href="#i-pencil"/></svg></button>
+                  <button class="btn-acao excluir" title="Excluir"><svg class="ico"><use href="#i-trash"/></svg></button>
+                </div></td>
+              </tr>
+
+              <tr data-sexo="F" data-cidade="Guarulhos/SP" data-nasc="2002-06-27">
+                <td><div class="usuario"><span class="avatar">ID</span>Isabela Duarte Pinto</div></td>
+                <td>789.012.345-67</td>
+                <td>27/06/2002</td>
+                <td><span class="badge recepcao"><svg class="ico"><use href="#i-user"/></svg>Feminino</span></td>
+                <td>(11) 92789-0123</td>
+                <td>isabela.pinto@email.com</td>
+                <td>Guarulhos/SP</td>
+                <td><div class="acoes">
+                  <button class="btn-acao" title="Visualizar"><svg class="ico"><use href="#i-eye"/></svg></button>
+                  <button class="btn-acao" title="Editar"><svg class="ico"><use href="#i-pencil"/></svg></button>
+                  <button class="btn-acao excluir" title="Excluir"><svg class="ico"><use href="#i-trash"/></svg></button>
+                </div></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <div class="lista-rodape">
+          <span class="contador" id="contador">Mostrando 1 a 7 de 48 pacientes</span>
+          <div class="paginacao">
+            <button type="button" aria-label="Anterior"><svg class="ico"><use href="#i-chevron-left"/></svg></button>
+            <button type="button" class="atual">1</button>
+            <button type="button">2</button>
+            <button type="button">3</button>
+            <button type="button">4</button>
+            <button type="button">5</button>
+            <button type="button" class="reticencias">...</button>
+            <button type="button">7</button>
+            <button type="button" aria-label="Próxima"><svg class="ico"><use href="#i-chevron-right"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===================== POPUP: CADASTRAR NOVO PACIENTE ===================== -->
+  <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+
+      <div class="modal-topo">
+        <div class="modal-titulo">
+          <div class="icone"><svg class="ico"><use href="#i-users"/></svg></div>
+          <div>
+            <h2 id="modalTitulo">Cadastrar novo paciente</h2>
+            <p>Preencha os dados de identificação do paciente.</p>
+          </div>
+        </div>
+        <button type="button" class="modal-fechar" id="btnFecharModal" aria-label="Fechar">
+          <svg class="ico"><use href="#i-x"/></svg>
+        </button>
+      </div>
+
+      <form id="formPaciente" novalidate>
+
+        <div class="campo">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" placeholder="Ex.: Maria da Silva Souza" autocomplete="off">
+          <span class="msg-erro">Informe o nome completo.</span>
+        </div>
+
+        <div class="linha-dupla">
+          <div class="campo">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric" autocomplete="off">
+            <span class="msg-erro">Informe um CPF com 11 dígitos.</span>
+          </div>
+          <div class="campo">
+            <label for="nascimento">Data de nascimento</label>
+            <input type="date" id="nascimento">
+            <span class="msg-erro">Informe uma data de nascimento válida.</span>
+          </div>
+        </div>
+
+        <div class="linha-dupla">
+          <div class="campo">
+            <label for="sexo">Sexo</label>
+            <div class="select-wrap">
+              <select id="sexo">
+                <option value="">Selecione</option>
+                <option value="F">Feminino</option>
+                <option value="M">Masculino</option>
+                <option value="O">Outro</option>
+              </select>
+              <svg class="ico"><use href="#i-chevron-down"/></svg>
+            </div>
+            <span class="msg-erro">Selecione o sexo.</span>
+          </div>
+          <div class="campo">
+            <label for="telefone">Telefone</label>
+            <input type="text" id="telefone" placeholder="(00) 00000-0000" maxlength="15" inputmode="tel" autocomplete="off">
+            <span class="msg-erro">Informe um telefone válido.</span>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="nome@email.com" autocomplete="off">
+          <span class="msg-erro">Informe um e-mail válido.</span>
+        </div>
+
+        <div class="linha-cep">
+          <div class="campo">
+            <label for="cep">CEP</label>
+            <input type="text" id="cep" placeholder="00000-000" maxlength="9" inputmode="numeric" autocomplete="off">
+            <span class="msg-erro">Informe um CEP com 8 dígitos.</span>
+          </div>
+          <div class="campo">
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco" placeholder="Rua, número e bairro" autocomplete="off">
+            <span class="msg-erro">Informe o endereço.</span>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="cidade">Cidade/UF</label>
+          <input type="text" id="cidade" placeholder="Ex.: São Paulo/SP" autocomplete="off">
+          <span class="msg-erro">Use o formato Cidade/UF (ex.: São Paulo/SP).</span>
+        </div>
+
+        <div class="campo">
+          <label for="obs">Observações</label>
+          <textarea id="obs" rows="3" placeholder="Informações adicionais sobre o paciente (opcional)"></textarea>
+        </div>
+
+        <div class="modal-acoes">
+          <button type="button" class="btn-cancelar" id="btnCancelar">Cancelar</button>
+          <button type="submit" class="btn-primario">Finalizar cadastro</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* ---------- Menu hambúrguer ---------- */
+    document.getElementById('btnHamburguer').addEventListener('click', () =>
+      document.getElementById('wrapper').classList.toggle('recolhido'));
+
+    /* ---------- Popup ---------- */
+    const overlay = document.getElementById('modalOverlay');
+    const form = document.getElementById('formPaciente');
+
+    function abrirModal() {
+      overlay.classList.add('aberto');
+      overlay.setAttribute('aria-hidden', 'false');
+      setTimeout(() => document.getElementById('nome').focus(), 250);
+    }
+    function fecharModal() {
+      overlay.classList.remove('aberto');
+      overlay.setAttribute('aria-hidden', 'true');
+      form.reset();
+      form.querySelectorAll('.campo').forEach(c => c.classList.remove('erro'));
+    }
+
+    document.getElementById('btnNovo').addEventListener('click', abrirModal);
+    document.getElementById('btnFecharModal').addEventListener('click', fecharModal);
+    document.getElementById('btnCancelar').addEventListener('click', fecharModal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) fecharModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+
+    /* ---------- Máscaras ---------- */
+    document.getElementById('cpf').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+      v = v.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+      e.target.value = v;
+    });
+    document.getElementById('telefone').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+      v = v.replace(/^(\d{2})(\d)/, '($1) $2');
+      v = v.length > 10 ? v.replace(/(\d{5})(\d{1,4})$/, '$1-$2') : v.replace(/(\d{4})(\d{1,4})$/, '$1-$2');
+      e.target.value = v;
+    });
+    document.getElementById('cep').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 8);
+      e.target.value = v.replace(/^(\d{5})(\d)/, '$1-$2');
+    });
+
+    const SEXOS = { F: 'Feminino', M: 'Masculino', O: 'Outro' };
+    const SEXO_CLASSE = { F: 'recepcao', M: 'tecnico', O: 'analista' };
+
+    let total = 48;
+    const tbody = document.getElementById('tabela');
+    const contador = document.getElementById('contador');
+
+    function marcar(id, valido) {
+      document.getElementById(id).closest('.campo').classList.toggle('erro', !valido);
+      return valido;
+    }
+    function escapar(t) {
+      const d = document.createElement('div');
+      d.textContent = t;
+      return d.innerHTML;
+    }
+    function idade(iso) {
+      const n = new Date(iso + 'T00:00:00'), h = new Date();
+      let i = h.getFullYear() - n.getFullYear();
+      if (h < new Date(h.getFullYear(), n.getMonth(), n.getDate())) i--;
+      return i;
+    }
+
+    /* Atualiza as opções do filtro Cidade/UF a partir da tabela */
+    function atualizarCidades() {
+      const sel = document.getElementById('filtroCidade');
+      const atual = sel.value;
+      const cidades = [...new Set([...tbody.querySelectorAll('tr[data-cidade]')].map(tr => tr.dataset.cidade))].sort();
+      sel.innerHTML = '<option value="">Todas</option>' + cidades.map(c => `<option value="${escapar(c)}">${escapar(c)}</option>`).join('');
+      sel.value = cidades.includes(atual) ? atual : '';
+    }
+
+    /* ---------- Cadastro ---------- */
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const nome = document.getElementById('nome').value.trim();
+      const cpf = document.getElementById('cpf').value;
+      const nasc = document.getElementById('nascimento').value;
+      const sexo = document.getElementById('sexo').value;
+      const tel = document.getElementById('telefone').value;
+      const email = document.getElementById('email').value.trim();
+      const cep = document.getElementById('cep').value;
+      const endereco = document.getElementById('endereco').value.trim();
+      const cidade = document.getElementById('cidade').value.trim();
+      const obs = document.getElementById('obs').value.trim();
+
+      const nascOk = nasc !== '' && new Date(nasc) <= new Date() && idade(nasc) < 130;
+
+      const ok = [
+        marcar('nome', nome.split(/\s+/).filter(Boolean).length >= 2),
+        marcar('cpf', cpf.replace(/\D/g, '').length === 11),
+        marcar('nascimento', nascOk),
+        marcar('sexo', sexo !== ''),
+        marcar('telefone', tel.replace(/\D/g, '').length >= 10),
+        marcar('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)),
+        marcar('cep', cep.replace(/\D/g, '').length === 8),
+        marcar('endereco', endereco.length >= 3),
+        marcar('cidade', /^.+\/[A-Za-z]{2}$/.test(cidade))
+      ].every(Boolean);
+      if (!ok) return;
+
+      /* TODO (Flask): enviar para a rota de cadastro, ex.:
+         fetch('/pacientes/cadastrar', { method: 'POST', body: JSON.stringify({ nome, cpf, nasc, sexo, tel, email, cep, endereco, cidade, obs }) }) */
+
+      const cidadeFmt = cidade.replace(/\/([A-Za-z]{2})$/, (_, uf) => '/' + uf.toUpperCase());
+      const partes = nome.split(/\s+/);
+      const iniciais = (partes[0][0] + partes[partes.length - 1][0]).toUpperCase();
+      const [a, m, d] = nasc.split('-');
+
+      const tr = document.createElement('tr');
+      tr.dataset.sexo = sexo;
+      tr.dataset.cidade = cidadeFmt;
+      tr.dataset.nasc = nasc;
+      tr.innerHTML = `
+        <td><div class="usuario"><span class="avatar">${iniciais}</span>${escapar(nome)}</div></td>
+        <td>${cpf}</td>
+        <td>${d}/${m}/${a}</td>
+        <td><span class="badge ${SEXO_CLASSE[sexo]}"><svg class="ico"><use href="#i-user"/></svg>${SEXOS[sexo]}</span></td>
+        <td>${tel}</td>
+        <td>${escapar(email)}</td>
+        <td>${escapar(cidadeFmt)}</td>
+        <td><div class="acoes">
+          <button class="btn-acao" title="Visualizar"><svg class="ico"><use href="#i-eye"/></svg></button>
+          <button class="btn-acao" title="Editar"><svg class="ico"><use href="#i-pencil"/></svg></button>
+          <button class="btn-acao excluir" title="Excluir"><svg class="ico"><use href="#i-trash"/></svg></button>
+        </div></td>`;
+      tbody.prepend(tr);
+
+      total++;
+      atualizarCidades();
+      aplicarFiltros();
+      fecharModal();
+    });
+
+    /* ---------- Filtros ---------- */
+    function aplicarFiltros() {
+      const busca = document.getElementById('filtroBusca').value.trim().toLowerCase();
+      const sexo = document.getElementById('filtroSexo').value;
+      const faixa = document.getElementById('filtroFaixa').value;
+      const cidade = document.getElementById('filtroCidade').value;
+
+      let visiveis = 0;
+      tbody.querySelectorAll('tr:not(.linha-vazia)').forEach(tr => {
+        const i = idade(tr.dataset.nasc);
+        const faixaOk = !faixa ||
+          (faixa === 'menor' && i < 18) ||
+          (faixa === 'adulto' && i >= 18 && i < 60) ||
+          (faixa === 'idoso' && i >= 60);
+        const mostrar =
+          (!busca || tr.textContent.toLowerCase().includes(busca)) &&
+          (!sexo || tr.dataset.sexo === sexo) &&
+          faixaOk &&
+          (!cidade || tr.dataset.cidade === cidade);
+        tr.style.display = mostrar ? '' : 'none';
+        if (mostrar) visiveis++;
+      });
+
+      let vazia = tbody.querySelector('.linha-vazia');
+      if (!visiveis && !vazia) {
+        vazia = document.createElement('tr');
+        vazia.className = 'linha-vazia';
+        vazia.innerHTML = '<td colspan="8">Nenhum paciente encontrado.</td>';
+        tbody.appendChild(vazia);
+      } else if (visiveis && vazia) {
+        vazia.remove();
+      }
+
+      contador.textContent = visiveis
+        ? `Mostrando 1 a ${visiveis} de ${total} pacientes`
+        : `Mostrando 0 de ${total} pacientes`;
+    }
+
+    document.getElementById('btnFiltrar').addEventListener('click', aplicarFiltros);
+    document.getElementById('filtroBusca').addEventListener('input', aplicarFiltros);
+    ['filtroSexo', 'filtroFaixa', 'filtroCidade'].forEach(id =>
+      document.getElementById(id).addEventListener('change', aplicarFiltros));
+
+    /* ---------- Excluir (remove a linha da tela) ---------- */
+    tbody.addEventListener('click', e => {
+      const btn = e.target.closest('.btn-acao.excluir');
+      if (!btn) return;
+      if (confirm('Deseja realmente excluir este paciente?')) {
+        btn.closest('tr').remove();
+        total--;
+        atualizarCidades();
+        aplicarFiltros();
+      }
+    });
+  </script>
+</body>
+</html>

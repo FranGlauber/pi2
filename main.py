@@ -107,6 +107,29 @@ def administracao():
 def perfil_administrador():
     return render_template("perfil.html")
 
+@app.route("/cadastro_consulta_usuarios")
+def cadastro_usuarios():
+    return render_template("cadastro_consulta_usuarios.html")
+
+@app.route("/cadastro_consulta_funcionarios")
+def cadastro_funcionarios():
+    return render_template("cadastro_consulta_funcionarios.html")
+
+@app.route("/cadastro_consulta_pacientes")
+def cadastro_pacientes():
+    return render_template("cadastro_consulta_pacientes.html")
+
+@app.route("/cadastro_exames")
+def cadastro_exames():
+    return render_template("cadastro_exames.html")
+
+@app.route("/relatorios")
+def relatorios():
+    return render_template("relatorios.html")
+
+@app.route("/perfil_admin")
+def perfil_admin():
+    return render_template("perfil_admin.html")
 
 # ---------------------------------------------------------------
 # RECEPÇÃO
